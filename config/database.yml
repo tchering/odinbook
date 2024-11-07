@@ -79,6 +79,7 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  <<: *default
   adapter: postgresql
   url: <%= ENV['DATABASE_URL'] %> # This will automatically pull the database connection string from Heroku
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
