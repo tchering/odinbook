@@ -1,0 +1,12 @@
+<%= turbo_frame_tag dom_id(post) do %>
+<div class="card mb-3 shadow-sm">
+  <div class="card-body">
+    <p class="card-text fs-5 mb-3"><%= post.body %></p>
+    <footer class="text-muted d-flex align-items-center">
+      <small class="me-2"><%= post.author.name %></small>
+      <small class="text-secondary">•</small>
+      <small class="ms-2 text-secondary"><%= time_ago_in_words(post.created_at) %> ago</small>
+    </footer>
+  </div>
+</div>
+<% end %>

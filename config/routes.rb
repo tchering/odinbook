@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get "users/index"
+  get "users/show"
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -12,4 +14,6 @@ Rails.application.routes.draw do
   # root "posts#index"
   root "static_pages#home"
   get "home", to: "static_pages#home"
+  resources :posts
+  resources :users, only: [:index, :show]
 end

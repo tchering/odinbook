@@ -29,15 +29,35 @@
       </a>
       <!-- Left links -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Dashboard</a>
-        </li>
+        <%= link_to "Home",root_path,class:"nav-link" %>
         <li class="nav-item">
           <a class="nav-link" href="#">Team</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Projects</a>
         </li>
+    <%# todo Drop down  %>
+      <li class="nav-item dropdown">
+        <a
+          data-mdb-dropdown-init
+          class="nav-link dropdown-toggle"
+          href="#"
+          id="navbarDropdownMenuLink"
+          role="button"
+          aria-expanded="false"
+        >
+          Contents
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <%= link_to "All Users",users_path,class:"dropdown-item" %>
+          <li>
+            <a class="dropdown-item" href="#">Another action</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </li>
+        </ul>
+      </li>
       </ul>
       <!-- Left links -->
     </div>
@@ -50,7 +70,7 @@
         <i class="fas fa-shopping-cart"></i>
       </a>
 
-      <!-- Notifications -->
+      <%# !Dropdown Notification %>
       <div class="dropdown">
         <a
           data-mdb-dropdown-init
@@ -78,7 +98,8 @@
           </li>
         </ul>
       </div>
-      <!-- Avatar -->
+
+      <%# !Dropdown Avatar %>
       <div class="dropdown">
         <a
           data-mdb-dropdown-init
@@ -100,12 +121,9 @@
           class="dropdown-menu dropdown-menu-end"
           aria-labelledby="navbarDropdownMenuAvatar"
         >
-          <li>
-            <a class="dropdown-item" href="#">My profile</a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="#">Settings</a>
-          </li>
+          <%= link_to "My profile",user_path(current_user),class:"dropdown-item" %>
+        
+          <%= link_to "Settings",edit_user_registration_path,class:"dropdown-item" %>
           <%= link_to "Logout",destroy_user_session_path,data:{turbo_method: :delete}, class:"dropdown-item" %>
         </ul>
       </div>
@@ -114,6 +132,8 @@
   </div>
   <!-- Container wrapper -->
 </nav>
+
+
 <%# ! when user is not signed in  %>
 <!-- Navbar -->
 <% else %>

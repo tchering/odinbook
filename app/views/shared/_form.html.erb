@@ -1,0 +1,11 @@
+<% if @post.errors.any? %>
+  <% @post.errors.full_messages do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+<% end %>
+<%= form_with(model: @post) do |f| %>
+  <div class="form-field">
+    <%= f.text_area :body, placeholder: "Your thoughts" %>
+  </div>
+  <%= f.submit "Submit post" %>
+<% end %>

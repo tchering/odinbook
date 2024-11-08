@@ -1,0 +1,22 @@
+<%= turbo_frame_tag "post_form" do  %>
+  <div class="card p-3 mb-3">
+    <% if post.errors.any? %>
+      <div class="alert alert-danger">
+        <ul class="list-unstyled mb-0">
+          <% post.errors.full_messages.each do |msg| %>
+            <li><i class="fas fa-exclamation-circle"></i> <%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <%= form_with(model: post, local: false, class: "needs-validation") do |f| %>
+      <div class="form-group mb-3">
+        <%= f.text_area :body, 
+          class: "form-control", 
+          placeholder: "What's on your mind?", 
+          rows: 3 %>
+      </div>
+      <%= f.submit "Submit post", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+<% end %>

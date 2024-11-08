@@ -1,2 +1,12 @@
-<h1>StaticPages#home</h1>
-<p>Find me in app/views/static_pages/home.html.erb</p>
+<div class="row">
+  <div class="col col-4">
+    <%= render "shared/user_info" %>
+    <%= render partial: "posts/form", locals: { post: @post } %>
+  </div>
+  <%#! Turbo frame to append the post onces created %>
+  <div class="col col-6" id="posts_container">
+    <% @posts.each do |post| %>
+      <%= render partial: "posts/post",locals:{post: post} %>
+    <% end %>
+  </div>
+</div>
