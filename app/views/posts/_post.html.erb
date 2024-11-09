@@ -25,14 +25,16 @@
             <i class="fas fa-trash-can"></i>
           <% end %>
         <% end %>
-        <%= link_to post_comments_path(post), data: { turbo_frame: "comments_#{dom_id(post)}" }, class: "" do %>
-          <i class="fas fa-comment"></i>
-        <% end %>
       </div>
       <%# !turbo frame for comments %>
-      <%= turbo_frame_tag "comments_#{dom_id(post)}" do %>
+      <%= turbo_frame_tag "comments_#{dom_id(post)}" do %><%#!target%>
         <div class="text-center text-muted">
-          <small>Click <i class="fas fa-comment"></i> to load comments.</small>
+          <small>
+            <%= link_to post_comments_path(post), data: { turbo_frame: "comments_#{dom_id(post)}" } do %> <%#! trigger%>
+              <%#! when clicked will replace the target with comments/index.html.erb turbo tag which has same name %>
+              <i class="fas fa-comment"></i> Click to load comments
+            <% end %>
+          </small>
         </div>
       <% end %>
     </div>

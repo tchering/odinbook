@@ -3,7 +3,7 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :destroy, :edit, :update]
 
   def index
-    @posts = Post.includes(:author, :comments).recent
+    @posts = Post.includes(:author).recent
     # respond_to do |format|
     #   format.html { }
     #   format.turbo_stream do

@@ -1,0 +1,11 @@
+<%= turbo_frame_tag "new_comment_form" do %>
+    <%= form_with(model: [@post, comment], local: false, class: "comment-form") do |f| %>
+        <div class="form-group">
+            <%= f.label :body, "Your Comment", class: "form-label" %>
+            <%= f.text_area :body, class: "form-control", placeholder: "Write your comment here..." %>
+        </div>
+        <div class="form-actions">
+            <%= f.submit "Post Comment", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+<% end %>

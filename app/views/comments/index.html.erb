@@ -1,13 +1,38 @@
-<%= turbo_frame_tag "comments_#{dom_id(@post)}" do %>
-  <div class="comments-section">
+<%= turbo_frame_tag "comments_#{dom_id(@post)}" do %> <%#%>
+  <%# * comment form section %>
+  <div class="comment-actions d-flex gap-2 mb-3">
+    <%= link_to new_post_comment_path(@post),
+                            class: "btn btn-primary btn-sm",
+                            data: { turbo_frame: "new_comment_form" } do %>
+      <i class="fas fa-comment-alt"></i> New Comment
+    <% end %>
+    <%= link_to "#",
+                            class: "btn btn-outline-secondary btn-sm",
+                            data: { action: "click->comments#cancel" } do %>
+      <i class="fas fa-times"></i> Cancel
+    <% end %>
+  </div>
+  <%#to turbo frame to open comment form %>
+  <%= turbo_frame_tag "new_comment_form" do  %>
+  <% end %>
+  <%# to -----------end---------------- %>
+  <%# *---------end---------------------- %>
+  <%# ! container that shows all the comments-------> %>
+  <%# ! so new comments should be appended here %>
+  <div class="comments-section overflow-auto" id="after_post_comment" style="height: 40vh;">
     <% if @comments.any? %>
       <% @comments.each do |comment| %>
         <%= render "comments/comment", comment: comment %>
       <% end %>
     <% else %>
-      <div class="alert alert-info" role="alert">
-        No comments yet. Be the first to comment!
-      </div>
+      <%#todo i have this frame tag to remove this message when 1st comment is posted %>
+      <%= turbo_frame_tag "empty_state_#{dom_id(@post)}" do %>
+        <div class="alert alert-info" role="alert">
+          No comments yet. Be the first to comment!
+        </div>
+      <% end %>
     <% end %>
   </div>
 <% end %>
+<%#!-------------end---------------- %>
+<%#!-------------end---------------- %>

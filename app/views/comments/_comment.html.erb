@@ -1,13 +1,33 @@
-<div class="comment-item">
-  <div class="comment-content">
-    <%= comment.body %>
+<div class="comment-item bg-white p-4 mb-3 rounded-3 shadow-sm hover-shadow transition">
+  <div class="d-flex align-items-start">
+    <div class="comment-avatar me-3">
+      <%# Add a placeholder or user avatar here %>
+      <div class="rounded-circle bg-light d-flex align-items-center justify-content-center" style="width: 40px; height: 40px">
+        <i class="bi bi-person text-secondary"></i>
+      </div>
+    </div>
+    <div class="comment-wrapper flex-grow-1">
+      <div class="comment-content mb-2">
+        <span class="fw-semibold text-dark me-2"><%= comment.author.name %></span>
+        <span class="comment-text text-secondary"><%= comment.body %></span>
+      </div>
+      <div class="comment-metadata">
+        <small class="text-muted d-flex align-items-center gap-2">
+          <span><%= time_ago_in_words(comment.created_at) %> ago</span>
+          <% if comment.author == current_user %>
+            <span class="action-links">
+              <%= link_to "#", class: 'text-primary text-decoration-none opacity-75 hover-opacity-100' do %>
+                <i class="bi bi-pencil-square"></i>
+              <% end %>
+              <%= link_to "#", 
+                  class: 'text-danger text-decoration-none opacity-75 hover-opacity-100 ms-2',
+                  data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } do %>
+                <i class="bi bi-trash"></i> Delete
+              <% end %>
+            </span>
+          <% end %>
+        </small>
+      </div>
+    </div>
   </div>
-  <div class="comment-metadata">
-    <small>
-      <%= comment.author.name %> - <%= time_ago_in_words(comment.created_at) %> ago
-    </small>
-  </div>
-</div>
-<div>
-  <p>Insert comment</p>
 </div>
