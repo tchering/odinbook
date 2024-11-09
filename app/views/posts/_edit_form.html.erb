@@ -1,0 +1,13 @@
+<%= form_with(model: @post, class: "p-4 bg-white shadow-sm rounded") do |f| %>
+    <div class="form-outline mb-4">
+        <%= f.text_field :body, class: "form-control" %>
+        <label class="form-label" for="post_body">Update your post</label>
+    </div>
+
+    <div class="d-flex justify-content-end gap-2">
+        <%= f.submit "Update", class: "btn btn-primary" %>
+        <%= link_to "Cancel", posts_path, 
+                class: "btn btn-light",
+                data: { turbo_frame: "posts_container" } %>
+  </div>
+<% end %>

@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by(id: params[:id])
-    @posts = @user.posts
+    @posts = @user.posts.includes(:author)
     unless @user
       redirect_to users_path, notice: "No user found"
     end

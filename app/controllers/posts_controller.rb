@@ -3,10 +3,17 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :destroy, :edit, :update]
 
   def index
-    @posts = Post.includes(:author).all
+    @posts = Post.includes(:author).recent
+    respond_to do |format|
+      format.html { }
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.update("posts_container", partial: "posts/post", locals: { post: @post })
+      end
+    end
   end
 
   def show
+   
   end
 
   def new
@@ -32,12 +39,22 @@ class PostsController < ApplicationController
   end
 
   def edit
+    respond_to do |format|
+      format.html
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(dom_id(@post),
+                                                  partial: "posts/edit_form", locals: { post: Post.new })
+      end
+    end
   end
 
   def update
     respond_to do |format|
-      if @post && @post.update
+      if @post.update(post_params)
         format.html { redirect_to posts_path, notice: "Post has been updated" }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(dom_id(@post), partial: "posts/post", locals: { post: @post })
+        end
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
@@ -45,10 +62,15 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    if @post && @post.destroy
-      redirect_to posts_path, notice: "Post has been deleted"
-    else
-      redirect_to posts_path, error: "Post cannot be deleted"
+    respond_to do |format|
+      if @post && @post.destroy
+        format.html { redirect_to root_path, notice: "Post deleted" }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.remove(dom_id(@post))
+        end
+      else
+        format.html { redirect_to root_path, error: "Please try again later", status: :unprocessable_entity }
+      end
     end
   end
 
