@@ -13,3 +13,4 @@
 # create post
 Post.create!(body: "This is first post from faker", user_id: 1)
 Post.create!(body: "This is second post from faker", user_id: 1)
+Comment.create!(body: "This is first comment", post_id: 11, user_id: 2)

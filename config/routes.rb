@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'comments/index'
+  get 'comments/new'
+  get 'comments/create'
+  get 'comments/edit'
+  get 'comments/update'
+  get 'comments/destroy'
   get "users/index"
   get "users/show"
   devise_for :users
