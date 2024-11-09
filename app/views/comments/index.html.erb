@@ -5,7 +5,9 @@
         <%= render "comments/comment", comment: comment %>
       <% end %>
     <% else %>
-      <p>No comments yet</p>
+      <div class="alert alert-info" role="alert">
+        No comments yet. Be the first to comment!
+      </div>
     <% end %>
   </div>
 <% end %>
