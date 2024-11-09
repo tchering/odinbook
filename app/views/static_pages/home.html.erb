@@ -4,9 +4,11 @@
     <%= render partial: "posts/form", locals: { post: @post } %>
   </div>
   <%#! Turbo frame to append the post onces created %>
-  <div class="col col-7 overflow-auto" id="posts_container" style="height: 80vh;>
-    <% @posts.each do |post| %>
-      <%= render partial: "posts/post",locals:{post: post} %>
+  <div class="col col-7 overflow-auto" style="height: 80vh;">
+    <%= turbo_frame_tag "posts_container" do %>
+      <% @posts.each do |post| %>
+        <%= render partial: "posts/post", locals: { post: post } %>
+      <% end %>
     <% end %>
   </div>
 </div>

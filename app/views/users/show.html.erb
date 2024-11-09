@@ -2,9 +2,11 @@
   <div class="col col-4">
     <%= render "user",user: @user %>
   </div>
-  <div class="col col-7 overflow-auto" style="height: 80vh;>
-    <% @posts.each do |post| %>
-      <%= render partial: "posts/post",locals:{post: post} %>
+  <div class="col col-7 overflow-auto" style="height: 80vh;">
+    <%= turbo_frame_tag "posts_container" do %>
+      <% @posts.each do |post| %>
+        <%= render partial: "posts/post", locals: { post: post } %>
+      <% end %>
     <% end %>
   </div>
 </div>

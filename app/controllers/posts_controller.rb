@@ -4,37 +4,22 @@ class PostsController < ApplicationController
 
   def index
     @posts = Post.includes(:author).recent
-    respond_to do |format|
-      format.html { }
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.update("posts_container", partial: "posts/post", locals: { post: @post })
-      end
-    end
+    # respond_to do |format|
+    #   format.html { }
+    #   format.turbo_stream do
+    #     render turbo_stream: turbo_stream.update("posts_container", partial: "posts/post", locals: { post: @post })
+    #   end
+    # end
   end
 
   def show
-   
   end
 
   def new
     @post = Post.new
-  end
-
-  def create
-    @post = current_user.posts.build(post_params)
     respond_to do |format|
-      if @post.save
-        format.html { redirect_to root_path, notice: "New post added" }
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.append("posts_container", partial: "post", locals: { post: @post }) +
-                               turbo_stream.replace("post_form", partial: "posts/form", locals: { post: Post.new })
-        end
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.replace("post_form", partial: "posts/form", locals: { post: Post.new })
-        end
-      end
+      format.html { render :new }
+      format.turbo_stream
     end
   end
 
@@ -43,7 +28,32 @@ class PostsController < ApplicationController
       format.html
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(dom_id(@post),
-                                                  partial: "posts/edit_form", locals: { post: Post.new })
+                                                  partial: "posts/edit_form", locals: { post: @post })
+      end
+    end
+  end
+
+  def create
+    @post = current_user.posts.build(post_params)
+    respond_to do |format|
+      if @post.save
+        format.html { }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.prepend("posts_container",
+                                                    partial: "posts/post",
+                                                    locals: { post: @post }) +
+                               turbo_stream.replace("post_form",
+                                                    partial: "posts/form",
+                                                    locals: { post: Post.new })
+        end
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.turbo_stream do
+          # Return the form with the same @post to show validation errors
+          render turbo_stream: turbo_stream.replace("post_form",
+                                                    partial: "posts/form",
+                                                    locals: { post: @post }), status: :unprocessable_entity
+        end
       end
     end
   end
@@ -63,7 +73,7 @@ class PostsController < ApplicationController
 
   def destroy
     respond_to do |format|
-      if @post && @post.destroy
+      if @post.destroy
         format.html { redirect_to root_path, notice: "Post deleted" }
         format.turbo_stream do
           render turbo_stream: turbo_stream.remove(dom_id(@post))
