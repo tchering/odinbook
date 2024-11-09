@@ -11,19 +11,28 @@
         </div>
       </div>
       <p class="card-text fs-6 mb-3 text-dark"><%= post.body %></p>
-      <% if post.author == current_user %>
-        <div class="d-flex justify-content-end border-top pt-2">
-          <%= link_to edit_post_path(post), class: "btn btn-outline-secondary btn-sm me-2" do %>
-            <i class="bi bi-pencil-square"></i> Edit
+      <div class="d-flex justify-content-end border-top pt-2">
+        <% if post.author == current_user %>
+          <%= link_to edit_post_path(post), class: "me-2" do %>
+            <i class="fas fa-pen"></i>
           <% end %>
           <%= link_to post_path(post), 
-            class: "btn btn-outline-danger btn-sm",
+            class: "me-2",
             data: {
               turbo_method: :delete,
               turbo_confirm: "Are you sure you want to delete this post?"
             } do %>
-            <i class="bi bi-trash"></i> Delete
+            <i class="fas fa-trash-can"></i>
           <% end %>
+        <% end %>
+        <%= link_to post_comments_path(post), data: { turbo_frame: "comments_#{dom_id(post)}" }, class: "" do %>
+          <i class="fas fa-comment"></i>
+        <% end %>
+      </div>
+      <%# !turbo frame for comments %>
+      <%= turbo_frame_tag "comments_#{dom_id(post)}" do %>
+        <div class="text-center text-muted">
+          <small>Click <i class="fas fa-comment"></i> to load comments.</small>
         </div>
       <% end %>
     </div>

@@ -3,7 +3,7 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :destroy, :edit, :update]
 
   def index
-    @posts = Post.includes(:author).recent
+    @posts = Post.includes(:author, :comments).recent
     # respond_to do |format|
     #   format.html { }
     #   format.turbo_stream do
@@ -91,7 +91,7 @@ class PostsController < ApplicationController
   end
 
   def set_post
-    @post = Post.find_by(id: params[:id])
+    @post = Post.includes(:comments).find_by(id: params[:id])
     unless @post
       redirect_to posts_path, alert: "Post not found."
     end

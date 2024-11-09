@@ -53,6 +53,7 @@ group :development, :test do
   gem "letter_opener"
   gem "faker"
   gem "bullet"
+  gem "byebug"
 end
 
 group :development do

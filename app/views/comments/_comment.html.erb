@@ -1,0 +1,13 @@
+<div class="comment-item">
+  <div class="comment-content">
+    <%= comment.body %>
+  </div>
+  <div class="comment-metadata">
+    <small>
+      <%= comment.author.name %> - <%= time_ago_in_words(comment.created_at) %> ago
+    </small>
+  </div>
+</div>
+<div>
+  <p>Insert comment</p>
+</div>
