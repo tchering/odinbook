@@ -33,7 +33,7 @@ class User < ApplicationRecord
     if avatar.attached?
       avatar.variant(resize_to_limit: [140, 140])
     else
-      "/default_avatar.png"
+      "default_avatar.png"
     end
   end
 
