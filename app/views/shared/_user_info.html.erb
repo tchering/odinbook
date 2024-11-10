@@ -4,7 +4,7 @@
       <%= current_user.avatar.attached? ?
                 image_tag(current_user.avatar.variant(resize_to_fit: [300, 300]), 
                                      class: "rounded-circle square shadow-sm", style: "width: 150px; height: 150px; object-fit: cover;") :
-                image_tag("default_avatar",
+                image_tag("default_avatar.png",
                                      class: "rounded-circle shadow-sm", style: "width: 150px; height: 150px; object-fit: cover;") %>
     </div>
     <h5 class="fw-bold mb-2"><%= current_user.name %></h5>
