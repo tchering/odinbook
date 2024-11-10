@@ -21,20 +21,6 @@ class CommentsController < ApplicationController
     end
   end
 
-  # def create
-  #   @comment = @post.comments.build(comment_params)
-  #   @comment.author = current_user
-  #   respond_to do |format|
-  #     if @comment.save
-  #       format.turbo_stream do
-  #         render turbo_stream: turbo_stream.prepend("after_post_comment", partial: "comments/comment",
-  #                                                                         locals: { comment: @comment }) +
-  #                              turbo_stream.replace("new_comment_form", partial: "comments/form", locals: { comment: Comment.new })
-  #       end
-  #     end
-  #   end
-  # end
-
   def create
     @comment = @post.comments.build(comment_params)
     @comment.author = current_user
@@ -62,6 +48,19 @@ class CommentsController < ApplicationController
   end
 
   def destroy
+    @comment = @post.comments.find(params[:id])
+    respond_to do |format|
+      if @comment.destroy
+        format.html { }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.remove("comment_#{dom_id(@comment)}")
+        end
+      else
+        format.turbo_stream do
+          render turbo_stream: { notice: "Unable to delete the comment" }
+        end
+      end
+    end
   end
 
   private

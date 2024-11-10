@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   include ActionView::RecordIdentifier
 
   def index
-    @users = User.includes(:posts).all
+    @users = User.all
   end
 
   def show
