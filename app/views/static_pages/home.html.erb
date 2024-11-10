@@ -1,14 +1,18 @@
+<div class="container-fluid">
 <div class="row">
-  <div class="col col-4">
+    <%# User info and post form column - stacks on mobile %>
+    <div class="col-12 col-md-4 mb-3">
     <%= render "shared/user_info" %>
     <%= render partial: "posts/form", locals: { post: @post } %>
   </div>
+    
   <%#! Turbo frame to append the post onces created %>
-  <div class="col col-7 overflow-auto" style="height: 80vh;">
+    <div class="col-12 col-md-7 overflow-auto" style="height: 80vh;">
     <%= turbo_frame_tag "posts_container" do %>
       <% @posts.each do |post| %>
         <%= render partial: "posts/post", locals: { post: post } %>
       <% end %>
     <% end %>
+    </div>
   </div>
 </div>
