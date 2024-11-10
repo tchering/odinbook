@@ -4,7 +4,11 @@
       <div class="comment-avatar me-3">
         <%# Add a placeholder or user avatar here %>
         <div class="rounded-circle bg-light d-flex align-items-center justify-content-center" style="width: 40px; height: 40px">
-          <i class="bi bi-person text-secondary"></i>
+          <%= link_to user_path(comment.author),data:{turbo_frame:"_top"} do %>
+            <%= comment.author.avatar.attached? ?
+           image_tag(comment.author.display_avatar,class:"rounded-circle ",height:"30",width:"35") : 
+           image_tag("default_avatar.png",height:"70",width:"70") %>
+          <% end %>
         </div>
       </div>
       <div class="comment-wrapper flex-grow-1">

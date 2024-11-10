@@ -1,3 +1,4 @@
+# app/controllers/users_controller.rb
 class UsersController < ApplicationController
   include ActionView::RecordIdentifier
 
@@ -7,9 +8,11 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by(id: params[:id])
-    @posts = @user.posts.includes(:author).recent
-    unless @user
-      redirect_to users_path, notice: "No user found"
+
+    if @user
+      @posts = @user.posts.includes(:author).recent
+    else
+      redirect_to users_path, notice: "User not found" and return
     end
   end
 end

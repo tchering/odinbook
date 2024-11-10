@@ -40,6 +40,17 @@
                   <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
                 </div>
               </div>
+              <%#to image upload field %>
+              <div class="col-md-12 mt-3">
+                <div class="form-group">
+                  <%= f.label :avatar, "Profile Picture", class: "form-label" %>
+                  <%= f.file_field :avatar, class: "form-control", accept: "image/*" %>
+                  <div class="form-text">
+                    <small>Choose a profile picture (optional).You can later set it from settings.</small>
+                  </div>
+                </div>
+              </div>
+              <%#to------------------- %>
             </div>
             <div class="d-grid gap-2">
               <%= f.submit "Sign up", class: "btn btn-primary" %>

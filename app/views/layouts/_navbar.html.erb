@@ -108,14 +108,17 @@
           id="navbarDropdownMenuAvatar"
           role="button"
           aria-expanded="false"
-        >
-          <img
-            src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
-            class="rounded-circle"
-            height="25"
-            alt="Black and White Portrait of a Man"
-            loading="lazy"
-          />
+        > 
+          <% if current_user&.avatar.attached? %>
+    <%= image_tag current_user.avatar.variant(resize_to_limit:[50,50]),
+        height: "25",
+        width: "35",
+        alt: "#{current_user.name}'s avatar",
+        loading: "lazy",
+        class: "rounded-circle" %>
+        <% else %>
+  <%= image_tag "default_avatar.png",height:"40",alt:"Default Avatar",loading:"lazy",class:"rounded-circle" %>
+  <% end %>
         </a>
         <ul
           class="dropdown-menu dropdown-menu-end"

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 source "https://rubygems.org"
+gem "active_storage_validations", "~> 1.3"
+gem "devise", "~> 4.9"
 
 ruby "3.3.0"
 
@@ -70,6 +72,7 @@ end
 
 group :production do
   gem "pg"
+  gem "aws-sdk-s3", "~> 1.170"
 end
 
 group :test do
@@ -78,4 +81,4 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "devise", "~> 4.9"
+gem "image_processing", "~> 1.13"
