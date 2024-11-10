@@ -83,3 +83,6 @@ production:
   url: <%= ENV['DATABASE_URL'] %> # This will automatically pull the database connection string from Heroku
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  # Add these settings:
+  prepared_statements: false
+  advisory_locks: false
