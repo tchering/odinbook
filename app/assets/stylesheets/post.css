@@ -1,0 +1,23 @@
+.comment-badge {
+  transition: all 0.2s ease;
+}
+.comment-badge:hover {
+  transform: translateY(-1px);
+  background-color: #f8f9fa;
+}
+
+.post-text {
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 15px -3px rgba(0, 0, 0, 0.07),
+    0 10px 20px -2px rgba(0, 0, 0, 0.04);
+}
+
+.post-text:hover {
+  /* box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.07);
+  transform: translateY(-1px); */
+}
+
+.lead {
+  line-height: 1.7;
+  color: rgba(0, 0, 0, 0.87);
+}

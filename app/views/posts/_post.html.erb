@@ -16,29 +16,53 @@
           <small class="text-secondary"><%= time_ago_in_words(post.created_at) %> ago</small>
         </div>
       </div>
-      <p class="card-text fs-6 mb-3 text-dark"><%= post.body %></p>
-      <div class="d-flex justify-content-end border-top pt-2">
-        <% if post.author == current_user %>
-          <%= link_to edit_post_path(post), class: "me-2" do %>
-            <i class="fas fa-pen"></i>
+      <%#? Post body ,delete and edit button %>
+      <div class="post-content mb-3">
+        <div class="d-flex justify-content-between align-items-start">
+          <%#* --------Post body------ %>
+            <div class="post-text bg-white p-3 rounded-3 w-100">
+            <p class="lead mb-0 text-body fw-normal" style="font-size: 0.95rem; letter-spacing: 0.01em;">
+              <%= post.body %>
+            </p>
+          </div>
+          <%#*-------------------------- %>
+          <%# * Edit and Delete button %>
+          <% if post.author == current_user %>
+            <div class="post-actions ms-3 d-flex">
+              <%= link_to edit_post_path(post), 
+              class: "btn btn-link text-decoration-none p-2 rounded-circle hover-bg-light" do %>
+                <i class="fas fa-pen text-secondary"></i>
+              <% end %>
+              <%= link_to post_path(post),
+              class: "btn btn-link text-decoration-none p-2 rounded-circle hover-bg-light",
+              data: {
+                turbo_method: :delete,
+                turbo_confirm: "Delete this post?"
+              } do %>
+                <i class="fas fa-trash-can text-secondary"></i>
+              <% end %>
+            </div>
           <% end %>
-          <%= link_to post_path(post), 
-            class: "me-2",
-            data: {
-              turbo_method: :delete,
-              turbo_confirm: "Are you sure you want to delete this post?"
-            } do %>
-            <i class="fas fa-trash-can"></i>
-          <% end %>
-        <% end %>
+          <%#*------------------------------ %>
+        </div>
       </div>
+      <%#?-------------------------------------------  %>
       <%# !turbo frame for comments %>
       <%= turbo_frame_tag "comments_#{dom_id(post)}" do %><%#!target%>
-        <div class="text-center text-muted">
+        <div class="text-center text-muted ">
           <small>
             <%= link_to post_comments_path(post), data: { turbo_frame: "comments_#{dom_id(post)}" } do %> <%#! trigger%>
               <%#! when clicked will replace the target with comments/index.html.erb turbo tag which has same name %>
-              <i class="fas fa-comment"></i> Click to load comments
+              <%= link_to post_comments_path(post),
+    class: "text-decoration-none",
+    data: { turbo_frame: "comments_#{dom_id(post)}" } do %>
+                <div class="d-inline-flex align-items-center bg-light rounded-pill px-3 py-1 shadow-sm comment-badge">
+                  <i class="far fa-comments me-2 text-primary"></i>
+                  <span class="text-secondary">
+                    <%= pluralize(post.comments_count, 'comment') %>
+                  </span>
+                </div>
+              <% end %>
             <% end %>
           </small>
         </div>
