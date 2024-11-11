@@ -4,7 +4,11 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  #
+  # Controls whether or not application classes should be cached.
+  # When set to true, classes are loaded only once and reloaded only when files are changed.
+  # In production, this should always be true for better performance.
+  config.cache_classes = true
+  config.eager_load = true
   #stores uploaded files on amazon s3
   config.active_storage.service = :amazon
 

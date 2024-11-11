@@ -86,3 +86,7 @@ production:
   # Add these settings:
   prepared_statements: false
   advisory_locks: false
+  # The maximum size of the connection pool, defining how many concurrent database
+  # connections the application can maintain at a time. Setting this to 5 means
+  # up to 5 simultaneous database connections can be active.
+  pool: 5
