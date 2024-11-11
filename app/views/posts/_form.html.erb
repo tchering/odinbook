@@ -12,9 +12,6 @@
     <%#! This is form for post %>
     <%= form_with(model: post, local: false, class: "needs-validation") do |f| %>
       <div class="d-flex align-items-center mb-3">
-        <div class="avatar me-2">
-          <%= image_tag(current_user.avatar.presence || "default_avatar.png", class: "rounded-circle", size: "40") %>
-        </div>
         <div class="flex-grow-1">
           <%= f.text_area :body, 
             class: "form-control border-0 bg-light", 
