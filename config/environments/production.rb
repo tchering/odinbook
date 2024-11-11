@@ -102,11 +102,9 @@ Rails.application.configure do
   #for action mailer in production
   config.action_mailer.default_url_options = { host: "https://odin-final-9a1f523128de.herokuapp.com" }
 
-  config.action_dispatch.default_headers = {
-    "Permissions-Policy" => "compute-pressure=()",
-    # Preserve any existing headers
-    "X-Frame-Options" => "SAMEORIGIN",
-    "X-Content-Type-Options" => "nosniff",
-    "X-XSS-Protection" => "1; mode=block",
-  }
+  config.action_dispatch.default_headers.merge!(
+    "Access-Control-Allow-Origin" => "*",
+    "Access-Control-Allow-Methods" => "GET",
+    "Permissions-Policy" => "interest-cohort=(), compute-pressure=()",
+  )
 end
