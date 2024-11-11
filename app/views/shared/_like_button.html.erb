@@ -1,0 +1,38 @@
+<%= turbo_frame_tag "like_#{dom_id(likeable)}" do %>
+  <div class="me-4">
+    <%#! 1st likeable is referencing to   belongs_to :likeable this in like.rb  %>
+    <%#! 2nd likeable is referencing to object either Comment/Post passed from dom_id(likeable) %>
+    <% if (like = current_user.likes.find_by(likeable: likeable)) %>
+      <%#! Below 1st likeable is object passed from dom_id(likeable) either Post or Comment %>
+      <%#! 2nd :like is referencing to resources likes in routes %>
+      <%#!This tells Rails that you're referring to the like resource related to the @likeable object. %>
+      <%= link_to polymorphic_path([likeable, :like],id: like.id), 
+          class: "btn btn-light btn-sm", 
+          data: { turbo_method: :delete } do %>
+        <i class="fas fa-thumbs-up text-primary"></i>
+        <span class="d-none d-sm-inline text-primary">Liked</span>
+      <% end %>
+    <% else %>
+      <%= link_to polymorphic_path([likeable, :likes]), 
+          class: "btn btn-light btn-sm",
+          data: { turbo_method: :post } do %>
+        <i class="far fa-thumbs-up"></i>
+        <span class="d-none d-sm-inline">Like</span>
+      <% end %>
+    <% end %>
+    <%#*turbo frame to for dynamic likes %>
+    <%= turbo_frame_tag "likes_count_#{dom_id(likeable)}" do %>
+      <span class="text-muted"><%= likeable.likes_count %></span>
+    <% end %>
+    <%#*-------------------------------- %>
+  </div>
+<% end %>
+<%#! link_to post_likes_path(post),class:""....  %>
+<%#! this is correct aswell but now we can use this partial for comments that's why polymorphic path is used above %>
+<%# current_user.likes.exists?(
+  likeable_type: likeable.class.name,  # "Post" or "Comment"
+  likeable_id: likeable.id             # The actual post_id or comment_id
+) %>
+<%# First likeable in likeable: likeable is telling Rails to use the polymorphic association that we defined in like.rb belongs_to :likeable, polymorphic: true, counter_cache: true
+Second likeable is the actual Post/Comment object from your controller
+Rails automatically splits this into likeable_type and likeable_id behind the scenes %>

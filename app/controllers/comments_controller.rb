@@ -9,7 +9,7 @@ class CommentsController < ApplicationController
 
     # debugger
 
-    @comments = @post.comments.includes(:author).recent
+    @comments = @post.comments.includes(:author, author: { avatar_attachment: :blob }).recent
   end
 
   def new
