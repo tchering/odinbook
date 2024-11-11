@@ -1,26 +1,44 @@
 <%= turbo_frame_tag "post_form" do  %>
-  <div class="card p-3 mb-3">
+  <div class="card shadow-sm p-3 mb-3">
     <% if post.errors.any? %>
-      <div class="alert alert-danger">
+      <div class="alert alert-danger fade show">
         <ul class="list-unstyled mb-0">
           <% post.errors.full_messages.each do |msg| %>
-            <li><i class="fas fa-exclamation-circle"></i> <%= msg %></li>
+            <li><i class="fas fa-exclamation-circle me-2"></i><%= msg %></li>
           <% end %>
         </ul>
       </div>
     <% end %>
+    <%#! This is form for post %>
     <%= form_with(model: post, local: false, class: "needs-validation") do |f| %>
+      <div class="d-flex align-items-center mb-3">
+        <div class="avatar me-2">
+          <%= image_tag(current_user.avatar.presence || "default_avatar.png", class: "rounded-circle", size: "40") %>
+        </div>
+        <div class="flex-grow-1">
+          <%= f.text_area :body, 
+            class: "form-control border-0 bg-light", 
+            placeholder: "What's on your mind?", 
+            rows: 3 %>
+        </div>
+      </div>
       <div class="form-group mb-3">
-        <%= f.text_area :body, 
-          class: "form-control", 
-          placeholder: "What's on your mind?", 
-          rows: 3 %>
+        <label class="btn btn-light btn-sm">
+          <i class="fas fa-image me-2"></i>Add Photo
+          <%= f.file_field :image, class: "d-none" %>
+        </label>
       </div>
-      <div class="form-group">
-        <%= f.label :image %>
-        <%= f.file_field :image %>
+      <div id="selected-image" class="mb-3 d-none">
+        <div class="d-flex align-items-center">
+          <i class="fas fa-check-circle text-success me-2"></i>
+          <span>Image selected</span>
+          <button type="button" class="btn-close ms-2" aria-label="Remove image"></button>
+        </div>
       </div>
-      <%= f.submit "Submit post", class: "btn btn-primary" %>
+      <%#to JS script in custom/image_preview.js %>
+      <div class="text-end">
+        <%= f.submit "Post", class: "btn btn-primary px-4" %>
+      </div>
     <% end %>
   </div>
 <% end %>

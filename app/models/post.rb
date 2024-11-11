@@ -8,11 +8,26 @@ class Post < ApplicationRecord
   has_many :comments, dependent: :destroy
 
   has_one_attached :image
-  validates :image, content_type: { in: ["image/png", "image/jpg", "image/jpeg", "image/gif"], message: "must be a PNG, JPG, JPEG or GIF" }, size: { less_than: 2.megabytes, message: "should be less than 2MB" }
+
+  validate :acceptable_image, if: -> { image.attached? }
 
   def display_image
     if image.attached?
       image.variant(resize_to_limit: [500, 500])
+    end
+  end
+
+  private
+
+  def acceptable_image
+    # Check content type
+    unless image.content_type.in?(%w[image/png image/jpg image/jpeg image/gif])
+      errors.add(:image, "must be a PNG, JPG, JPEG or GIF")
+    end
+
+    # Check file size
+    unless image.byte_size <= 2.megabytes
+      errors.add(:image, "should be less than 2MB")
     end
   end
 end

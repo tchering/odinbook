@@ -18,28 +18,42 @@
       </div>
       <%#? Post body ,delete and edit button %>
       <div class="post-content mb-3">
-        <div class="d-flex justify-content-between align-items-start">
+        <div class="d-flex justify-content-between align-items-start flex-column">
           <%#* --------Post body------ %>
-            <div class="post-text bg-white p-3 rounded-3 w-100">
+          <div class="post-text bg-white p-3 rounded-3 w-100">
             <p class="lead mb-0 text-body fw-normal" style="font-size: 0.95rem; letter-spacing: 0.01em;">
               <%= post.body %>
             </p>
+            <%#! ---------post image ---------- %>
+            <div class="post-image">
+              <% if post.image.attached? %>
+                <div class="image-container">
+                  <%= image_tag post.image.variant(resize_to_limit:[800,800]), 
+                        class: "img-fluid post-image-content", 
+                        alt: "post_image",
+                        loading: "lazy" %>
+                </div>
+              <% end %>
+            </div>
+            <%#!------------------------------- %>
           </div>
           <%#*-------------------------- %>
           <%# * Edit and Delete button %>
           <% if post.author == current_user %>
-            <div class="post-actions ms-3 d-flex">
+            <div class="post-actions d-flex justify-content-end w-100 mt-2">
               <%= link_to edit_post_path(post), 
-              class: "btn btn-link text-decoration-none p-2 rounded-circle hover-bg-light" do %>
-                <i class="fas fa-pen text-secondary"></i>
+          class: "btn btn-light btn-sm me-2 d-flex align-items-center" do %>
+                <i class="fas fa-pen text-secondary me-1"></i>
+                <span class="d-none d-sm-inline">Edit</span>
               <% end %>
               <%= link_to post_path(post),
-              class: "btn btn-link text-decoration-none p-2 rounded-circle hover-bg-light",
+          class: "btn btn-light btn-sm d-flex align-items-center",
               data: {
                 turbo_method: :delete,
                 turbo_confirm: "Delete this post?"
               } do %>
-                <i class="fas fa-trash-can text-secondary"></i>
+                <i class="fas fa-trash-can text-secondary me-1"></i>
+                <span class="d-none d-sm-inline">Delete</span>
               <% end %>
             </div>
           <% end %>
