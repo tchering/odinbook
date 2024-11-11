@@ -21,13 +21,7 @@ class User < ApplicationRecord
                        message: "should be less than 2MB",
                      }
 
-  # def display_avatar
-  #   if avatar.attached?
-  #     avatar.image.variant(resize: "100x100!").processed
-  #   else
-  #     "/default_avatar.png"
-  #   end
-  # end
+  has_many :likes, dependent: :destroy
 
   def display_avatar
     if avatar.attached?

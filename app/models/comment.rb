@@ -5,4 +5,6 @@ class Comment < ApplicationRecord
   scope :recent, -> { order(created_at: :desc) }
 
   validates :body, presence: true, length: { minimum: 1 }
+
+  has_many :likes, as: :likeable, dependent: :destroy
 end

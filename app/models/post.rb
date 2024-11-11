@@ -9,6 +9,8 @@ class Post < ApplicationRecord
 
   has_one_attached :image
 
+  has_many :likes, as: :likeable, dependent: :destroy
+
   validate :acceptable_image, if: -> { image.attached? }
 
   def display_image
