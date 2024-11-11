@@ -35,7 +35,21 @@
           <button type="button" class="btn-close ms-2" aria-label="Remove image"></button>
         </div>
       </div>
-      <%#to JS script in custom/image_preview.js %>
+      <%#to JS script to make sure image has been selected %>
+      <script>
+        document.querySelector('input[type="file"]').addEventListener('change', function(e) {
+          const selectedImage = document.getElementById('selected-image');
+          if (e.target.files.length > 0) {
+            selectedImage.classList.remove('d-none');
+          }
+
+          selectedImage.querySelector('.btn-close').addEventListener('click', function() {
+            e.target.value = '';
+            selectedImage.classList.add('d-none');
+          });
+        });
+      </script>
+      <%#to -------------------------------------------- %>
       <div class="text-end">
         <%= f.submit "Post", class: "btn btn-primary px-4" %>
       </div>
