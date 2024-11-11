@@ -1,14 +1,13 @@
 <div class="container-fluid">
-<div class="row">
-    <div class="col-12 col-md-4 mb-3">
-      <%= render "user", user: @user %>
+    <%= render partial:"shared/user_info" %>
+  <div>
+    <%= render partial:"posts/form",locals:{post:@post} %>
   </div>
-    <div class="col-12 col-md-8 overflow-auto" style="max-height: 80vh;">
+  <div class= style="max-height: 80vh;">
     <%= turbo_frame_tag "posts_container" do %>
       <% @posts.each do |post| %>
         <%= render partial: "posts/post", locals: { post: post } %>
       <% end %>
     <% end %>
-    </div>
   </div>
 </div>
