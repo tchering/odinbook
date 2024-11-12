@@ -17,13 +17,15 @@
             <h6 class="fw-bold  mb-0"><%=link_to post.author.name,user_path(post.author),class:"text-dark",data:{turbo_frame:"_top"} %></h6>
             <small class="text-secondary"><%= time_ago_in_words(post.created_at) %> ago</small>
           </div>
-          <% unless post.author == current_user %>
-            <% if current_user.followings.include?(post.author)%>
-              <small class="text-primary">Following</small>
-            <% else %>
-              <small class="text-secondary">Not Following</small>
+          <div>
+            <% unless post.author == current_user %>
+              <% if current_user.followings.include?(post.author)%>
+                <small class="text-primary">Following</small>
+              <% else %>
+                <small class="text-secondary">Not Following</small>
+              <% end %>
             <% end %>
-          <% end %>
+          </div>
         </div>
         <%#to---------------------- %>
       </div>
