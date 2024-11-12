@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class PostsController < ApplicationController
   include ActionView::RecordIdentifier
-  before_action :set_post, only: [:show, :destroy, :edit, :update]
+  before_action :set_post, only: %i[show destroy edit update]
 
   def index
     @posts = Post.includes(:author).recent
@@ -12,8 +14,7 @@ class PostsController < ApplicationController
     # end
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @post = Post.new
@@ -28,7 +29,7 @@ class PostsController < ApplicationController
       format.html
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(dom_id(@post),
-                                                  partial: "posts/edit_form", locals: { post: @post })
+                                                  partial: 'posts/edit_form', locals: { post: @post })
       end
     end
   end
@@ -37,21 +38,21 @@ class PostsController < ApplicationController
     @post = current_user.posts.build(post_params)
     respond_to do |format|
       if @post.save
-        format.html { }
+        format.html {}
         format.turbo_stream do
-          render turbo_stream: turbo_stream.prepend("posts_container",
-                                                    partial: "posts/post",
+          render turbo_stream: turbo_stream.prepend('posts_container',
+                                                    partial: 'posts/post',
                                                     locals: { post: @post }) +
-                               turbo_stream.replace("post_form",
-                                                    partial: "posts/form",
+                               turbo_stream.replace('post_form',
+                                                    partial: 'posts/form',
                                                     locals: { post: Post.new })
         end
       else
         format.html { render :new, status: :unprocessable_entity }
         format.turbo_stream do
           # Return the form with the same @post to show validation errors
-          render turbo_stream: turbo_stream.replace("post_form",
-                                                    partial: "posts/form",
+          render turbo_stream: turbo_stream.replace('post_form',
+                                                    partial: 'posts/form',
                                                     locals: { post: @post }), status: :unprocessable_entity
         end
       end
@@ -61,9 +62,9 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update(post_params)
-        format.html { redirect_to posts_path, notice: "Post has been updated" }
+        format.html { redirect_to posts_path, notice: 'Post has been updated' }
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace(dom_id(@post), partial: "posts/post", locals: { post: @post })
+          render turbo_stream: turbo_stream.replace(dom_id(@post), partial: 'posts/post', locals: { post: @post })
         end
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -74,12 +75,12 @@ class PostsController < ApplicationController
   def destroy
     respond_to do |format|
       if @post.destroy
-        format.html { redirect_to root_path, notice: "Post deleted" }
+        format.html { redirect_to root_path, notice: 'Post deleted' }
         format.turbo_stream do
           render turbo_stream: turbo_stream.remove(dom_id(@post))
         end
       else
-        format.html { redirect_to root_path, error: "Please try again later", status: :unprocessable_entity }
+        format.html { redirect_to root_path, error: 'Please try again later', status: :unprocessable_entity }
       end
     end
   end
@@ -92,8 +93,8 @@ class PostsController < ApplicationController
 
   def set_post
     @post = Post.includes(:comments).find_by(id: params[:id])
-    unless @post
-      redirect_to posts_path, alert: "Post not found."
-    end
+    return if @post
+
+    redirect_to posts_path, alert: 'Post not found.'
   end
 end

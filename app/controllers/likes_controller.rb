@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LikesController < ApplicationController
   include ActionView::RecordIdentifier
   before_action :set_likeable
@@ -24,8 +26,9 @@ class LikesController < ApplicationController
     streams = []
     respond_to do |format|
       if @like.save
-        format.html { }
-        streams << turbo_stream.replace("like_#{dom_id(@likeable)}", partial: "shared/like_button", locals: { likeable: @likeable })
+        format.html {}
+        streams << turbo_stream.replace("like_#{dom_id(@likeable)}", partial: 'shared/like_button',
+                                                                     locals: { likeable: @likeable })
         streams << turbo_stream.replace("likes_count_#{dom_id(@likeable)}", html: @likeable.likes_count)
         format.turbo_stream { render turbo_stream: streams }
       end
@@ -54,7 +57,8 @@ class LikesController < ApplicationController
     streams = []
     respond_to do |format|
       if @like.destroy
-        streams << turbo_stream.replace("like_#{dom_id(@likeable)}", partial: "shared/like_button", locals: { likeable: @likeable })
+        streams << turbo_stream.replace("like_#{dom_id(@likeable)}", partial: 'shared/like_button',
+                                                                     locals: { likeable: @likeable })
         streams << turbo_stream.replace("likes_count_#{dom_id(@likeable)}", html: @likeable.reload.likes_count)
         format.turbo_stream { render turbo_stream: streams }
       end

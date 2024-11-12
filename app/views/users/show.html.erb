@@ -1,8 +1,10 @@
 <div class="container-fluid">
-    <%= render partial:"shared/user_info" %>
-  <div>
-    <%= render partial:"posts/form",locals:{post:@post} %>
-  </div>
+  <%= render partial:"shared/user_info",locals:{user: @user} %>
+  <% if @user == current_user %>
+    <div>
+      <%= render partial:"posts/form",locals:{post:@post} %>
+    </div>
+  <% end %>
   <div class= style="max-height: 80vh;">
     <%= turbo_frame_tag "posts_container" do %>
       <% @posts.each do |post| %>

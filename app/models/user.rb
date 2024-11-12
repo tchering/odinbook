@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   before_create :set_default_role
   # Include default devise modules. Others available are:
@@ -22,6 +24,21 @@ class User < ApplicationRecord
                      }
 
   has_many :likes, dependent: :destroy
+
+  # relationships association
+  has_many :active_relationship, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+  has_many :followings, through: :active_relationship, source: :followed
+
+  has_many :passive_relationship, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
+  has_many :followers, through: :passive_relationship, source: :follower
+
+  def follow(other_user)
+    self.followings << other_user
+  end
+
+  def unfollow(other_user)
+    self.followings.delete(other_user)
+  end
 
   def display_avatar
     if avatar.attached?

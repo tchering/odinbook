@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 class AddLikesCountToComments < ActiveRecord::Migration[7.1]
   def change

@@ -1,0 +1,17 @@
+<% if current_user != user %>
+  <%= turbo_frame_tag "follow_button_#{dom_id(user)}" do %>
+    <% if current_user.followings.include?(user) %>
+      <%= link_to unfollow_relationship_path(user),
+                data: { turbo_method: :post },
+                class: "btn btn-outline-dark btn-sm rounded-pill following-btn" do %>
+        Following
+      <% end %>
+    <% else %>
+      <%= link_to follow_relationship_path(user),
+                data: { turbo_method: :post },
+                class: "btn btn-primary btn-sm rounded-pill" do %>
+        Follow
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

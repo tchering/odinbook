@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/controllers/users_controller.rb
 class UsersController < ApplicationController
   include ActionView::RecordIdentifier
@@ -7,7 +9,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find_by(id: params[:id])
+    @user = User.find(params[:id])
     @post = Post.new
     if @user
       @posts = @user.posts.includes(:author, image_attachment: :blob).recent
