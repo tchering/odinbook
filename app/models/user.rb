@@ -32,6 +32,10 @@ class User < ApplicationRecord
   has_many :passive_relationship, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
   has_many :followers, through: :passive_relationship, source: :follower
 
+  # messages association
+  has_many :sent_messages, class_name: "Message", foreign_key: "sender_id", dependent: :destroy
+  has_many :received_messages, class_name: "Message", foreign_key: "recipient_id", dependent: :destroy
+
   def follow(other_user)
     self.followings << other_user
   end

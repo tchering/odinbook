@@ -2,3 +2,4 @@
 import "@hotwired/turbo-rails";
 import "controllers";
 // import "./custom/image_preview.js";
+import "channels"

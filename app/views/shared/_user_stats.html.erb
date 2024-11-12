@@ -1,7 +1,9 @@
 <div class="d-flex flex-column flex-lg-row gap-2 w-100">
   <%= render partial: "shared/follow_unfollow",locals:{user: user} %>
-  <%= link_to "#", class: "btn btn-sm btn-light border-info text-info" do %>
-    <i class="fas fa-envelope"></i> Message
+  <% unless user == current_user  %>
+    <%= link_to chat_message_path(user), class: "btn btn-sm btn-light border-info text-info" do %>
+      <i class="fas fa-envelope"></i> Message
+    <% end %>
   <% end %>
   <%= link_to "#", class: "btn btn-sm btn-light border-success text-success" do %>
     <i class="fas fa-network-wired"></i> Mutual

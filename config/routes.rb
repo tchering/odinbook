@@ -35,4 +35,10 @@ Rails.application.routes.draw do
       post :unfollow
     end
   end
+
+  resources :messages, only: %i[create] do
+    member do
+      get :chat
+    end
+  end
 end
