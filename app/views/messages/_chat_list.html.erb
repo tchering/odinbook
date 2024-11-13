@@ -8,6 +8,7 @@
               <%= user.avatar.attached? ?
             image_tag(user.display_avatar, class: "rounded-circle avatar", height: "30", width: "30") :
             image_tag("default_avatar.png", class: "rounded-circle avatar", height: "30", width: "30") %>
+              <span class="badge rounded-pill badge-notification bg-danger">1</span>
             </div>
             <span class="profile-name text-body small fw-medium">
               <%= user.name.titleize %>

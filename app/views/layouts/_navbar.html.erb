@@ -116,7 +116,7 @@
         > 
           <% if current_user&.avatar.attached? %>
     <%= image_tag current_user.avatar.variant(resize_to_limit:[50,50]),
-        height: "25",
+        height: "22",
         alt: "#{current_user.name}'s avatar",
         loading: "lazy",
         class: "rounded-circle" %>
