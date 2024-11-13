@@ -1,4 +1,7 @@
 <!-- app/views/messages/chat.html.erb -->
+<div>
+  <%= render partial:"messages/chat_list",locals:{user:@user} %>
+</div>
 <div class="chat-container">
   <div id="chat-room" data-recipient-id="<%= @recipient.id %>" data-current-user-id="<%= current_user.id %>" class="chat-messages">
     <div id="message-display" class="messages-container">
