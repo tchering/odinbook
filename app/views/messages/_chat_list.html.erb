@@ -1,15 +1,17 @@
-<div class="conversations-wrapper">
+<div class="conversations-wrapper ">
   <div id="conversations-list" class="conversations-list d-flex flex-row overflow-auto">
     <% @conversations.each do |user| %>
-      <div class="conversation-item d-flex flex-column align-items-center p-2 rounded hover-effect mt-lg-5">
+      <div class="conversation-item d-flex flex-column align-items-center p-2 rounded hover-effect ">
         <div class="user-info text-center">
           <%= link_to chat_message_path(user), class: "text-decoration-none fw-semibold" do  %>
             <div class="avatar-container">
               <%= user.avatar.attached? ?
-            image_tag(user.display_avatar, class: "rounded-circle avatar", height: "48", width: "48") :
-            image_tag("default_avatar.png", class: "rounded-circle avatar", height: "48", width: "48") %>
+            image_tag(user.display_avatar, class: "rounded-circle avatar", height: "25", width: "25") :
+            image_tag("default_avatar.png", class: "rounded-circle avatar", height: "25", width: "25") %>
             </div>
-            <%= user.name %>
+            <span class="profile-name text-body small fw-medium">
+              <%= user.name.titleize %>
+            </span>
           <% end %>
         </div>
       </div>
