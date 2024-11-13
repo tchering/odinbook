@@ -6,8 +6,8 @@
           <%= link_to chat_message_path(user), class: "text-decoration-none fw-semibold" do  %>
             <div class="avatar-container">
               <%= user.avatar.attached? ?
-            image_tag(user.display_avatar, class: "rounded-circle avatar", height: "25", width: "25") :
-            image_tag("default_avatar.png", class: "rounded-circle avatar", height: "25", width: "25") %>
+            image_tag(user.display_avatar, class: "rounded-circle avatar", height: "30", width: "30") :
+            image_tag("default_avatar.png", class: "rounded-circle avatar", height: "30", width: "30") %>
             </div>
             <span class="profile-name text-body small fw-medium">
               <%= user.name.titleize %>
