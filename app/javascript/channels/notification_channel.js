@@ -42,19 +42,23 @@ const createNotificationSubscription = () => {
       received(data) {
         try {
           console.log("Received notification data:", data);
+          // Update conversation badge
           const badge = document.querySelector(
             `#notification_count_${data.sender_id}`
           );
-
-          if (!badge) {
-            console.warn(
-              `Badge element not found for sender ${data.sender_id}`
-            );
-            return;
+          if (badge) {
+            badge.classList.toggle("d-none", data.count === 0);
+            badge.textContent = data.count;
           }
 
-          badge.classList.toggle("d-none", data.count === 0);
-          badge.textContent = data.count;
+          // Update bell badge
+          const bellBadge = document.querySelector("#bell_notification_count");
+          if (bellBadge) {
+            bellBadge.textContent = data.count;
+            bellBadge.classList.toggle("d-none", data.count === 0);
+          } else {
+            console.warn("Bell notification badge not found");
+          }
         } catch (error) {
           console.error("Error handling notification:", error);
         }

@@ -39,6 +39,7 @@ class User < ApplicationRecord
   # notifications association
   has_many :sent_notifications, class_name: "Notification", foreign_key: "sender_id", dependent: :destroy
   has_many :received_notifications, class_name: "Notification", foreign_key: "recipient_id", dependent: :destroy
+
   def follow(other_user)
     self.followings << other_user
   end
@@ -53,6 +54,14 @@ class User < ApplicationRecord
     else
       "default_avatar.png"
     end
+  end
+
+  def grouped_unread_notifications
+    received_notifications
+      .unread
+      .includes(:message, sender: { avatar_attachment: :blob })
+      .group_by(&:sender_id)
+      .transform_values { |notifications| notifications.max_by(&:created_at) }
   end
 
   private

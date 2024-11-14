@@ -1,207 +1,113 @@
 <% if user_signed_in? %>
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary" data-controller="navbar">
-  <!-- Container wrapper -->
-  <div class="container-fluid">
-    <!-- Toggle button -->
-    <button
-      data-mdb-collapse-init
-      class="navbar-toggler"
-      type="button"
-      data-mdb-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <i class="fas fa-bars"></i>
-    </button>
-
-    <!-- Collapsible wrapper -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <!-- Navbar brand -->
-      <a class="navbar-brand mt-2 mt-lg-0" href="#">
-        <img
-          src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"
-          height="15"
-          alt="MDB Logo"
-          loading="lazy"
-        />
-      </a>
-      <!-- Left links -->
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <%= link_to "Home",root_path,class:"nav-link" %>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Team</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Projects</a>
-        </li>
-    <%# todo Drop down  %>
-      <li class="nav-item dropdown">
-        <a
-          data-mdb-dropdown-init
-          class="nav-link dropdown-toggle"
-          href="#"
-          id="navbarDropdownMenuLink"
-          role="button"
-          aria-expanded="false"
-        >
-          Contents
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <%= link_to "All Users",users_path,class:"dropdown-item" %>
-          <li>
-            <a class="dropdown-item" href="#">Another action</a>
+  <!-- Navbar for logged-in users -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary" data-controller="navbar">
+    <div class="container-fluid">
+      <!-- Toggle button -->
+      <button data-mdb-collapse-init class="navbar-toggler" type="button" data-mdb-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- Logo -->
+        <%= link_to root_path, class: "navbar-brand mt-2 mt-lg-0 d-flex align-items-center" do %>
+          <i class="fas fa-book-open me-2" style="color: #1266F1;"></i>
+          <span style="font-weight: 600; font-size: 1.25rem;">OdinBook</span>
+        <% end %>
+        <!-- Left Navigation Links -->
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <%= link_to "Home", root_path, class: "nav-link" %>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Team</a>
           </li>
-          <li>
-            <a class="dropdown-item" href="#">Something else here</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Projects</a>
           </li>
-        </ul>
-      </li>
-      </ul>
-      <!-- Left links -->
-    </div>
-    <!-- Collapsible wrapper -->
-
-    <!-- Right elements -->
-    <%#! shopping cart %>
-    <%# 
-    <div class="d-flex align-items-center">
-      <!-- Icon -->
-      <a class="link-secondary me-3" href="#">
-        <i class="fas fa-shopping-cart"></i>
-      </a>
-     %>
-
-      <%# !Dropdown Notification %>
-      <%#  
-      <div class="dropdown">
-        <a
-          data-mdb-dropdown-init
-          class="link-secondary me-3 dropdown-toggle hidden-arrow"
-          href="#"
-          id="navbarDropdownMenuLink"
-          role="button"
-          aria-expanded="false"
-        >
-          <i class="fas fa-bell"></i>
-          <span class="badge rounded-pill badge-notification bg-danger">1</span>
-        </a>
-        <ul
-          class="dropdown-menu dropdown-menu-end"
-          aria-labelledby="navbarDropdownMenuLink"
-        >
-          <li>
-            <a class="dropdown-item" href="#">Some news</a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="#">Another news</a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="#">Something else here</a>
+          <!-- Dropdown Menu -->
+          <li class="nav-item dropdown">
+            <a data-mdb-dropdown-init class="nav-link dropdown-toggle" href="#"
+               id="navbarDropdownMenuLink" role="button" aria-expanded="false">
+              Contents
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <%= link_to "All Users", users_path, class: "dropdown-item" %>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
           </li>
         </ul>
       </div>
-      %>
-
-      <%# !Dropdown Avatar %>
-      <div class="dropdown">
-        <a
-          data-mdb-dropdown-init
-          class="dropdown-toggle d-flex align-items-center hidden-arrow"
-          href="#"
-          id="navbarDropdownMenuAvatar"
-          role="button"
-          aria-expanded="false"
-        > 
-          <% if current_user&.avatar.attached? %>
-    <%= image_tag current_user.avatar.variant(resize_to_limit:[50,50]),
+      <!-- Right Elements -->
+      <div class="d-flex align-items-center">
+        <!-- Notification Bell -->
+        <%= render "shared/notification" %>
+        <!-- User Avatar Dropdown -->
+        <div class="dropdown">
+          <a data-mdb-dropdown-init class="dropdown-toggle d-flex align-items-center hidden-arrow"
+             href="#" id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
+            <% if current_user&.avatar.attached? %>
+              <%= image_tag current_user.avatar.variant(resize_to_limit: [50, 50]),
         height: "22",
         alt: "#{current_user.name}'s avatar",
         loading: "lazy",
         class: "rounded-circle" %>
-        <% else %>
-  <%= image_tag "default_avatar.png",height:"40",alt:"Default Avatar",loading:"lazy",class:"rounded-circle" %>
-  <% end %>
-        </a>
-        <ul
-          class="dropdown-menu dropdown-menu-end"
-          aria-labelledby="navbarDropdownMenuAvatar"
-        >
-          <%= link_to "My profile",user_path(current_user),class:"dropdown-item" %>
-        
-          <%= link_to "Settings",edit_user_registration_path,class:"dropdown-item" %>
-          <%= link_to "Logout",destroy_user_session_path,data:{turbo_method: :delete}, class:"dropdown-item" %>
-        </ul>
+            <% else %>
+              <%= image_tag "default_avatar.png",
+                          height: "40",
+                          alt: "Default Avatar",
+                          loading: "lazy",
+                          class: "rounded-circle" %>
+            <% end %>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
+            <%= link_to "My profile", user_path(current_user), class: "dropdown-item" %>
+            <%= link_to "Settings", edit_user_registration_path, class: "dropdown-item" %>
+            <%= link_to "Logout", destroy_user_session_path, 
+                       data: { turbo_method: :delete }, 
+                       class: "dropdown-item" %>
+          </ul>
+        </div>
       </div>
     </div>
-    <!-- Right elements -->
-  </div>
-  <!-- Container wrapper -->
-</nav>
-
-
-<%# ! when user is not signed in  %>
-<!-- Navbar -->
+  </nav>
 <% else %>
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary" data-controller="navbar">
-  <!-- Container wrapper -->
-  <div class="container">
-    <!-- Navbar brand -->
-    <a class="navbar-brand me-2" href="https://mdbgo.com/">
-      <img
-        src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"
-        height="16"
-        alt="MDB Logo"
-        loading="lazy"
-        style="margin-top: -1px;"
-      />
-    </a>
-
-    <!-- Toggle button -->
-    <button
-      data-mdb-collapse-init
-      class="navbar-toggler"
-      type="button"
+  <!-- Navbar for non-logged-in users -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary" data-controller="navbar">
+    <div class="container">
+      <!-- Logo -->
+      <a class="navbar-brand me-2" href="https://mdbgo.com/">
+        <img src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"
+             height="16" alt="MDB Logo" loading="lazy" style="margin-top: -1px;" />
+      </a>
+      <!-- Toggle button -->
+      <button data-mdb-collapse-init class="navbar-toggler" type="button"
       data-mdb-target="#navbarButtonsExample"
       aria-controls="navbarButtonsExample"
       aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <i class="fas fa-bars"></i>
-    </button>
-
-    <!-- Collapsible wrapper -->
-    <div class="collapse navbar-collapse" id="navbarButtonsExample">
-      <!-- Left links -->
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Dashboard</a>
-        </li>
-      </ul>
-      <!-- Left links -->
-
-      <div class="d-flex align-items-center">
-            <%= link_to "Login",new_user_session_path,data: {mdb_ripple_init: true},class:"btn btn-link px-3 me-2" %>
-        <%= link_to "Sign up", new_user_registration_path, class: "btn btn-primary me-3", data: { mdb_ripple_init: true},role:"button" %>
-        <a
-          data-mdb-ripple-init
-          class="btn btn-dark px-3"
-          href="https://github.com/mdbootstrap/mdb-ui-kit"
-          role="button"
-          ><i class="fab fa-github"></i
-        ></a>
+              aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarButtonsExample">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Dashboard</a>
+          </li>
+        </ul>
+        <div class="d-flex align-items-center">
+          <%= link_to "Login", new_user_session_path, 
+                     data: { mdb_ripple_init: true }, 
+                     class: "btn btn-link px-3 me-2" %>
+          <%= link_to "Sign up", new_user_registration_path, 
+                     class: "btn btn-primary me-3", 
+                     data: { mdb_ripple_init: true }, 
+                     role: "button" %>
+          <a data-mdb-ripple-init class="btn btn-dark px-3"
+             href="https://github.com/mdbootstrap/mdb-ui-kit" role="button">
+            <i class="fab fa-github"></i>
+          </a>
+        </div>
       </div>
     </div>
-    <!-- Collapsible wrapper -->
-  </div>
-  <!-- Container wrapper -->
-</nav>
-<!-- Navbar -->
-
+  </nav>
 <% end %>
-<script
-  type="text/javascript"
-  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.0.0/mdb.umd.min.js"
-></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.0.0/mdb.umd.min.js"></script>

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Post < ApplicationRecord
-  belongs_to :author, class_name: 'User', foreign_key: 'user_id'
+  belongs_to :author, class_name: "User", foreign_key: "user_id"
 
   validates :body, presence: true, length: { minimum: 5, maximum: 300 }
 
@@ -26,12 +26,12 @@ class Post < ApplicationRecord
   def acceptable_image
     # Check content type
     unless image.content_type.in?(%w[image/png image/jpg image/jpeg image/gif])
-      errors.add(:image, 'must be a PNG, JPG, JPEG or GIF')
+      errors.add(:image, "must be a PNG, JPG, JPEG or GIF")
     end
 
     # Check file size
-    return if image.byte_size <= 2.megabytes
+    return if image.byte_size <= 5.megabytes
 
-    errors.add(:image, 'should be less than 2MB')
+    errors.add(:image, "should be less than 5MB")
   end
 end
