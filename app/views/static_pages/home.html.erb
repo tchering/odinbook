@@ -6,7 +6,11 @@
       <%= render partial: "posts/form", locals: { post: @post } %>
       <%#? last list rendered here %>
       <div class="chat-list-container shadow-lg bg-white rounded-3 p-3 mb-4">
-        <h5 class="text-center fw-bold border-bottom pb-2 mb-3">Active Conversations</h5>
+        <h5 class="text-center fw-bold border-bottom pb-2 mb-3">
+          <i class="fas fa-comments text-primary me-2"></i>
+          Active Conversations
+          <div class="small text-muted">Connect and chat</div>
+        </h5>
         <%#to when new user sends message then this frame will be updated %>
         <%= render partial: "messages/chat_list", locals: { conversations: @conversations } %>
         <%#?----------------------------- %>
