@@ -41,4 +41,10 @@ Rails.application.routes.draw do
       get :chat
     end
   end
+
+  resources :notifications, only: [] do
+    collection do
+      post :mark_as_read
+    end
+  end
 end

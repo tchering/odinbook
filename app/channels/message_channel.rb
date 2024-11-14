@@ -7,5 +7,8 @@ class MessageChannel < ApplicationCable::Channel
 
   def unsubscribed
     # Any cleanup needed when channel is unsubscribed
+    stop_all_streams
+    # User.find(current_user.id).update(online: false)
+    # broadcast_to("presence_channel", { user: current_user.id, status: "offline" })
   end
 end

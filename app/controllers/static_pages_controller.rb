@@ -14,5 +14,7 @@ class StaticPagesController < ApplicationController
       .where("messages.sender_id = :user_id OR messages.recipient_id = :user_id", user_id: current_user.id)
       .where.not(id: current_user.id)
       .distinct.includes(avatar_attachment: :blob)
+
+      
   end
 end

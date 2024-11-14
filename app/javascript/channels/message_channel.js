@@ -18,6 +18,7 @@ document.addEventListener("turbo:load", () => {
 
         disconnected() {
           // Called when the subscription has been terminated by the server
+          console.log("Left message channel");
         },
 
         received(data) {

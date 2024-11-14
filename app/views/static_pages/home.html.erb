@@ -7,9 +7,13 @@
       <%#? last list rendered here %>
       <div class="chat-list-container shadow-lg bg-light rounded">
         <h5 class="text-center">Conversations</h5>
-        <%= render partial: "messages/chat_list", locals: { conversations: @conversations } %>
+        <%#to when new user sends message then this frame will be updated %>
+        <%= turbo_frame_tag "chat_list_container" do %>
+          <%= render partial: "messages/chat_list", locals: { conversations: @conversations } %>
+        <% end %>
+        <%#?----------------------------- %>
       </div>
-      <%#?------------------------- %>
+      <%#to------------------------- %>
     </div>
     <%#! Turbo frame to append the post onces created %>
     <div class="col-12 col-md-8 overflow-auto" style="height: 80vh;">
