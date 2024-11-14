@@ -5,12 +5,19 @@
       <%= render partial:"shared/user_info",locals:{user:@user} %>
       <%= render partial: "posts/form", locals: { post: @post } %>
       <%#? last list rendered here %>
-      <div class="chat-list-container shadow-lg bg-light rounded">
-        <h5 class="text-center">Conversations</h5>
+      <div class="chat-list-container shadow-lg bg-white rounded-3 p-3 mb-4">
+        <h5 class="text-center fw-bold border-bottom pb-2 mb-3">Active Conversations</h5>
         <%#to when new user sends message then this frame will be updated %>
         <%= render partial: "messages/chat_list", locals: { conversations: @conversations } %>
         <%#?----------------------------- %>
       </div>
+      <% if @conversations.empty? %>
+        <div class="text-center p-4">
+          <i class="fas fa-comments text-muted mb-2" style="font-size: 2rem;"></i>
+          <p class="text-muted mb-0">No active conversations</p>
+          <small class="text-muted">Start a new conversation to connect with others</small>
+        </div>
+      <% end %>
       <%#to------------------------- %>
     </div>
     <%#! Turbo frame to append the post onces created %>
