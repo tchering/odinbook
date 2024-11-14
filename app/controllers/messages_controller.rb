@@ -27,18 +27,6 @@ class MessagesController < ApplicationController
         "private_chat_#{[@message.sender_id, @message.recipient_id].sort.join("_")}",
         @message.as_json(include: :sender)
       )
-
-      # Update chat list via Turbo Stream
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.replace(
-            "chat_list_container",
-            partial: "messages/chat_list",
-            locals: { conversations: @conversations },
-          )
-        end
-        format.html { head :ok }
-      end
     end
   end
 

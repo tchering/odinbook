@@ -8,9 +8,7 @@
       <div class="chat-list-container shadow-lg bg-light rounded">
         <h5 class="text-center">Conversations</h5>
         <%#to when new user sends message then this frame will be updated %>
-        <%= turbo_frame_tag "chat_list_container" do %>
-          <%= render partial: "messages/chat_list", locals: { conversations: @conversations } %>
-        <% end %>
+        <%= render partial: "messages/chat_list", locals: { conversations: @conversations } %>
         <%#?----------------------------- %>
       </div>
       <%#to------------------------- %>

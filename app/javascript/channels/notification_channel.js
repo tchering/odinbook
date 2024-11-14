@@ -19,6 +19,7 @@ import consumer from "channels/consumer";
 //             badge.classList.remove("d-none");
 //             badge.textContent = data.count;
 //           }
+
 //         }
 //       },
 //     }
