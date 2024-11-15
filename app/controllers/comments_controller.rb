@@ -45,24 +45,6 @@ class CommentsController < ApplicationController
   end
 
   def update
-    # @comment = @post.comments.find(params[:id])
-    # respond_to do |format|
-    #   if @comment.update(comment_params)
-    #     format.html { }
-    #     format.turbo_stream do
-    #       render turbo_stream: turbo_stream.replace("comment_#{dom_id(@comment)}",
-    #                                                 partial: "comments/comment",
-    #                                                 locals: { comment: @comment })
-    #     end
-    #   else
-    #     format.turbo_stream do
-    #       render turbo_stream: turbo_stream.replace("comment_#{dom_id(@comment)}",
-    #                                                 partial: "comments/form",
-    #                                                 locals: { comment: @comment })
-    #     end
-    #   end
-    end
-
   end
 
   def destroy
