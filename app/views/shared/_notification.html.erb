@@ -1,19 +1,18 @@
- <div class="dropdown me-3">
+<div class="dropdown me-3">
           <a data-mdb-dropdown-init class="text-reset me-3 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink" role="button" aria-expanded="false">
             <i class="fas fa-bell"></i>
             <!-- Always render the badge, but toggle d-none class -->
-            <span class="badge rounded-pill badge-notification bg-primary <%= 'd-none' if current_user.received_notifications.unread.count.zero? %>" 
+            <span class="badge rounded-pill badge-notification bg-primary <%= 'd-none' if @notifications.empty? %>" 
                   id="bell_notification_count">
-              <%= current_user.received_notifications.unread.count %>
+              <%= @notifications.size %>
             </span>
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
             <li>
               <h6 class="dropdown-header">Notifications</h6>
             </li>
-            <% if current_user.received_notifications.unread.any? %>
-              <% current_user.received_notifications.unread
-           .includes(sender: { avatar_attachment: :blob })
+            <% if @notifications.any? %>
+              <% @notifications
            .group_by(&:sender_id)
            .map { |_, notifications| notifications.max_by(&:created_at) }
            .each do |notification| %>

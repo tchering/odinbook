@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :notification do
-    sender { nil }
-    recipient { nil }
-    message { nil }
+    sender { association :user }
+    recipient { association :user }
+    message { association :message }
     read { false }
   end
 end
