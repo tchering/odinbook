@@ -3,6 +3,7 @@
   <%= render partial:"messages/chat_list",locals:{user:@user} %>
 </div>
 <div class="chat-container">
+  <%#!value of (data-recipient-id & data-current-user-id) can be fetch in message_channel.js or any js file %>
   <div id="chat-room" data-recipient-id="<%= @recipient.id %>" data-current-user-id="<%= current_user.id %>" class="chat-messages">
     <div id="message-display" class="messages-container">
       <% @messages.each do |message| %>
