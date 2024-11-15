@@ -6,6 +6,7 @@
       <%#! Below 1st likeable is object passed from dom_id(likeable) either Post or Comment %>
       <%#! 2nd :like is referencing to resources likes in routes %>
       <%#!This tells Rails that you're referring to the like resource related to the @likeable object. %>
+      <%#! polymorphic_path is helper routes provided by rails so not visible in routes  %>
       <%= link_to polymorphic_path([likeable, :like],id: like.id), 
           class: "btn btn-light btn-sm", 
           data: { turbo_method: :delete } do %>
@@ -27,8 +28,8 @@
     <%#*-------------------------------- %>
   </div>
 <% end %>
-<%#! link_to post_likes_path(post),class:""....  %>
-<%#! this is correct aswell but now we can use this partial for comments that's why polymorphic path is used above %>
+<%#? link_to post_likes_path(post),class:""....  %>
+<%#! this is correct aswell but now we can use this partial only for comments that's why polymorphic path is used above %>
 <%# current_user.likes.exists?(
   likeable_type: likeable.class.name,  # "Post" or "Comment"
   likeable_id: likeable.id             # The actual post_id or comment_id

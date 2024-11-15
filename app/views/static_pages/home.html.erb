@@ -1,11 +1,11 @@
-<div class="container-fluid">
-  <div class="row">
+<div class="container-fluid px-0 px-sm-3">
+  <div class="row mx-0 mx-sm-n3">
     <%# User info and post form column - stacks on mobile %>
-    <div class="col-12 col-md-4 col-lg-4 mb-3">
+    <div class="col-12 col-md-4 col-lg-4 mb-3 px-0 px-sm-3">
       <%= render partial:"shared/user_info",locals:{user:@user} %>
       <%= render partial: "posts/form", locals: { post: @post } %>
       <%#? last list rendered here %>
-      <div class="chat-list-container shadow-lg bg-white rounded-3 p-3 mb-4">
+      <div class="chat-list-container shadow-lg bg-white rounded-3 p-3 px-0 px-sm-3 mb-4">
         <h5 class="text-center fw-bold border-bottom pb-2 mb-3">
           <i class="fas fa-comments text-primary me-2"></i>
           Active Conversations
@@ -25,7 +25,7 @@
       <%#to------------------------- %>
     </div>
     <%#! Turbo frame to append the post onces created %>
-    <div class="col-12 col-md-8 overflow-auto" style="height: 80vh;">
+    <div class="col-12 col-md-8 overflow-auto px-0 px-sm-3" style="height: 80vh;">
       <%= turbo_frame_tag "posts_container" do %>
         <% @posts.each do |post| %>
           <%= render partial: "posts/post", locals: { post: post } %>
