@@ -226,7 +226,14 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Projects</a>
           </li>
-          <!-- Dropdown Menu for Admin?? -->
+          <!-- All Users Link with Icon -->
+          <li class="nav-item">
+            <%= link_to users_path, class: "nav-link" do %>
+              <i class="fas fa-users"></i> All Users
+            <% end %>
+          </li>
+          <%#! <!-- Dropdown with Contents --> %>
+          <!-- 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" aria-expanded="false">
               Contents
@@ -237,6 +244,8 @@
               <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
           </li>
+          -->
+          <%#! -------------------- %>
         </ul>
       </div>
       <!-- Right Elements with class added -->
