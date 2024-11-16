@@ -13,11 +13,16 @@ class UsersController < ApplicationController
     @post = current_user.posts.build(wall_owner: @user)
 
     if @user
-      @posts = @user.wall_posts
-                    .includes(:wall_owner, :author,
-                              author: { avatar_attachment: :blob },
-                              image_attachment: :blob)
-                    .recent
+      wall_posts = @user.wall_posts
+      following_posts = Post.where(user_id: @user.following_ids)
+
+      @posts = Post.where(id: wall_posts.pluck(:id) + following_posts.pluck(:id))
+                   .includes(
+                     :wall_owner,
+                     author: { avatar_attachment: :blob },
+                     image_attachment: :blob,
+                   )
+                   .recent
     else
       redirect_to users_path, notice: "User not found" and return
     end
