@@ -4,7 +4,7 @@
       <div class="comment-avatar me-3">
         <%# Add a placeholder or user avatar here %>
         <div class="rounded-circle bg-light d-flex align-items-center justify-content-center" style="width: 40px; height: 40px">
-          <%= link_to user_path(comment.post.author),data:{turbo_frame:"_top"} do %>
+          <%= link_to user_path(comment.author),data:{turbo_frame:"_top"} do %>
             <%= comment.author.avatar.attached? ?
            image_tag(comment.author.display_avatar,class:"rounded-circle ",height:"25",width:"25",data:{turbo_frame:"_top"}) : 
            image_tag("default_avatar.png",height:"70",width:"70") %>
