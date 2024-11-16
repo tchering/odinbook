@@ -28,7 +28,9 @@
     <%= debug(params) if Rails.env.development? %>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
+    <div class="mt-5">
     <%= yield %>
+    </div>
     <!-- MDB -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.min.js"></script>
   </body>

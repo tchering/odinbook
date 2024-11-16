@@ -1,0 +1,199 @@
+/* Navbar styling */
+.navbar {
+  background-color: #f8f9fa;
+  padding: 1rem;
+}
+
+.navbar-brand {
+  font-weight: 600;
+}
+
+.nav-item {
+  margin-right: 15px;
+}
+
+.nav-link {
+  color: #333;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: #007bff;
+}
+
+/* Dropdown styling */
+.nav-item.dropdown:hover .dropdown-menu,
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu {
+  position: absolute;
+  background-color: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  display: none; /* Hide by default */
+  min-width: 160px;
+  border-radius: 0.25rem;
+  z-index: 1000;
+  right: -22px; /* Align to right edge of parent */
+  left: auto; /* Override default left alignment */
+}
+
+.nav-item .dropdown-menu {
+  left: 0;
+  right: auto;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* For medium screens (tablets): */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .dropdown-menu {
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    display: none; /* Hide by default */
+    max-width: 100%; /* Full width of the parent */
+    border-radius: 0.25rem;
+    z-index: 1000;
+    left: -110px; /* Align to left edge of parent */
+    right: 0; /* Ensure dropdown menu spans the entire width */
+  }
+}
+
+/* Custom CSS for responsive navbar */
+@media (max-width: 767px) {
+  .navbar-collapse {
+    transition: all 0.2s ease-in-out;
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    display: block !important; /* Override display:none */
+  }
+
+  .navbar-collapse.show {
+    opacity: 1;
+    height: auto;
+    padding: 1rem;
+  }
+
+  .navbar-collapse {
+    margin-top: 10px;
+  }
+
+  /* Ensure the navbar toggler button works */
+  .navbar-toggler {
+    display: block;
+  }
+
+  /* Remove unnecessary collapsing behavior */
+  .navbar-collapse {
+    display: none;
+  }
+
+  .navbar-collapse.show {
+    display: block;
+  }
+
+  .navbar-nav {
+    margin-top: 10px;
+  }
+
+  /* Optional: Adjust navbar link padding for smaller screens */
+  .navbar-nav .nav-item {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+/* Add new styles for logo centering */
+@media (max-width: 1024px) {
+  .navbar-brand {
+    /* Remove absolute positioning */
+    position: static;
+    transform: none;
+    margin-left: 1rem;
+  }
+
+  .navbar > .container-fluid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .navbar-collapse {
+    /* Add these to ensure dropdown appears below header elements */
+    order: 3;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .navbar-toggler {
+    order: 1;
+  }
+
+  .right-elements {
+    order: 2;
+  }
+
+  /* Ensure dropdown appears in correct position */
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+  }
+}
+
+/* Update styles for logo centering and hamburger positioning */
+@media (max-width: 1024px) {
+  .navbar-brand {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    z-index: 1; /* Keep logo above collapsed content */
+  }
+
+  .navbar > .container-fluid {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .navbar-toggler {
+    order: 0;
+    margin-right: 0;
+    position: relative;
+    left: 0;
+  }
+
+  .right-elements {
+    order: 2;
+  }
+
+  /* Update collapse behavior */
+  .navbar-collapse {
+    position: absolute;
+    top: 100%; /* Position below the header */
+    left: 0;
+    right: 0;
+    background: #f8f9fa;
+    padding: 1rem;
+    width: 100%;
+    order: 3;
+  }
+
+  /* Ensure other elements don't wrap around the absolute-positioned logo */
+  .navbar-collapse.show {
+    margin-top: 0;
+    border-top: 1px solid #dee2e6;
+  }
+}
