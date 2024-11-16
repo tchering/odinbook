@@ -1,1 +1,25 @@
-<%= user.email%>
+<%= link_to user_path(user), class: "text-decoration-none user-list-item" do %>
+  <div class="d-flex align-items-center justify-content-between p-2 border-bottom hover-bg-light">
+    <div class="d-flex align-items-center gap-3">
+      <%= image_tag(user.avatar.attached? ? user.avatar : "default_avatar.png", 
+                        class: "rounded-circle shadow-sm", 
+                        size: "40", 
+                                    alt: "#{user.name}'s avatar") %>
+      <div class="d-flex flex-column">
+        <span class="text-dark fw-semibold"><%= user.name %></span>
+        <small class="text-muted">@<%= user.name %></small>
+      </div>
+    </div>
+    <% unless user == current_user %>
+      <% if current_user.followings.include?(user) %>
+        <span class="btn btn-sm rounded-pill fw-bold text-white bg-dark hover-light">
+          <i class="fas fa-check me-1"></i>Following
+        </span>
+      <% else %>
+        <span class="btn btn-sm rounded-pill fw-bold text-white bg-primary hover-dark">
+          <i class="fas fa-plus me-1"></i>Follow
+        </span>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

@@ -226,19 +226,17 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Projects</a>
           </li>
-          <!-- Dropdown Menu for Admin -->
-          <% if current_user.role == "admin" %>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" aria-expanded="false">
-                Contents
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <%= link_to "All Users", users_path, class: "dropdown-item" %>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-              </ul>
-            </li>
-          <% end %>
+          <!-- Dropdown Menu for Admin?? -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" aria-expanded="false">
+              Contents
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <%= link_to "All Users", users_path, class: "dropdown-item" %>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
         </ul>
       </div>
       <!-- Right Elements with class added -->

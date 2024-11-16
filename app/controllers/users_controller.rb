@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   include ActionView::RecordIdentifier
 
   def index
-    @users = User.all
+    @users = User.includes(avatar_attachment: :blob).all
   end
 
   def show
@@ -14,7 +14,7 @@ class UsersController < ApplicationController
 
     if @user
       @posts = @user.wall_posts
-                    .includes(:wall_owner, :author, 
+                    .includes(:wall_owner, :author,
                               author: { avatar_attachment: :blob },
                               image_attachment: :blob)
                     .recent
