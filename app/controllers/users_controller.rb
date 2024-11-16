@@ -15,11 +15,11 @@ class UsersController < ApplicationController
     if @user
       @posts = @user.wall_posts
                     .includes(
+                      :wall_owner,
                       author: { avatar_attachment: :blob },
                       image_attachment: :blob,
                     )
                     .recent
-    else
       redirect_to users_path, notice: "User not found" and return
     end
   end

@@ -11,7 +11,7 @@
       </div>
     <% end %>
 
-    <%#! Wall Owner Information %>
+    <%#! Wall Owner Information  %>
     <% if post.wall_owner && post.wall_owner != current_user %>
       <div class="wall-owner-info mb-3">
         <div class="d-flex align-items-center">
@@ -30,7 +30,7 @@
           <% wall_owner = post.wall_owner || current_user %>
           <%= f.hidden_field :wall_owner_id, value: wall_owner.id %>
 
-      <%#! Post Content Area %>
+      <%#! Post Content Area || place holder according to user %>
       <div class="post-content-area mb-3">
           <%= f.text_area :body, 
             class: "form-control border-0 bg-light rounded-3 shadow-sm", 
