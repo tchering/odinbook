@@ -79,7 +79,7 @@
     max-width: 100%; /* Full width of the parent (navbar) */
     border-radius: 0.25rem;
     z-index: 1000;
-    left: -30px; /* Align to left edge of parent */
+    left: -80px; /* Align to left edge of parent */
     right: 0; /* Ensure dropdown menu spans the entire width */
   }
 
@@ -112,22 +112,108 @@
       padding-right: 0;
     }
   }
+
+  /* Add new styles for logo centering */
+  @media (max-width: 1024px) {
+    .navbar-brand {
+      /* Remove absolute positioning */
+      position: static;
+      transform: none;
+      margin-left: 1rem;
+    }
+
+    .navbar > .container-fluid {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .navbar-collapse {
+      /* Add these to ensure dropdown appears below header elements */
+      order: 3;
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    .navbar-toggler {
+      order: 1;
+    }
+
+    .right-elements {
+      order: 2;
+    }
+
+    /* Ensure dropdown appears in correct position */
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+    }
+  }
+
+  /* Update styles for logo centering and hamburger positioning */
+  @media (max-width: 1024px) {
+    .navbar-brand {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      margin: 0;
+      z-index: 1; /* Keep logo above collapsed content */
+    }
+
+    .navbar > .container-fluid {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .navbar-toggler {
+      order: 0;
+      margin-right: 0;
+      position: relative;
+      left: 0;
+    }
+
+    .right-elements {
+      order: 2;
+    }
+
+    /* Update collapse behavior */
+    .navbar-collapse {
+      position: absolute;
+      top: 100%; /* Position below the header */
+      left: 0;
+      right: 0;
+      background: #f8f9fa;
+      padding: 1rem;
+      width: 100%;
+      order: 3;
+    }
+
+    /* Ensure other elements don't wrap around the absolute-positioned logo */
+    .navbar-collapse.show {
+      margin-top: 0;
+      border-top: 1px solid #dee2e6;
+    }
+  }
 </style>
 <% if user_signed_in? %>
   <!-- Navbar for logged-in users -->
   <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary" data-controller="navbar">
     <div class="container-fluid">
-      <!-- Toggle button -->
+      <!-- Toggle button moved before logo -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarButtonsExample"
               aria-controls="navbarButtonsExample" aria-expanded="false" aria-label="Toggle navigation">
         <i class="fas fa-bars"></i>
       </button>
+      <!-- Logo moved outside of collapse -->
+      <%= link_to root_path, class: "navbar-brand mt-2 mt-lg-0 d-flex align-items-center" do %>
+        <i class="fas fa-book-open me-2" style="color: #1266F1;"></i>
+        <span style="font-weight: 600; font-size: 1.25rem;">OdinBook</span>
+      <% end %>
       <div class="collapse navbar-collapse" id="navbarButtonsExample">
-        <!-- Logo -->
-        <%= link_to root_path, class: "navbar-brand mt-2 mt-lg-0 d-flex align-items-center" do %>
-          <i class="fas fa-book-open me-2" style="color: #1266F1;"></i>
-          <span style="font-weight: 600; font-size: 1.25rem;">OdinBook</span>
-        <% end %>
         <!-- Left Navigation Links -->
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <%= link_to "Home", root_path, class: "nav-link" %>
@@ -152,8 +238,8 @@
           <% end %>
         </ul>
       </div>
-      <!-- Right Elements -->
-      <div class="d-flex align-items-center">
+      <!-- Right Elements with class added -->
+      <div class="d-flex align-items-center right-elements">
         <!-- Notification Bell Dropdown -->
         <%= render "shared/notification" %>
         <!-- User Avatar Dropdown -->
@@ -179,7 +265,7 @@
   <!-- Navbar for non-logged-in users -->
   <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
     <div class="container">
-      <!-- Logo -->
+      <!-- Logo moved outside of collapse -->
       <%= link_to root_path, class: "navbar-brand mt-2 mt-lg-0 d-flex align-items-center" do %>
         <i class="fas fa-book-open me-2" style="color: #1266F1;"></i>
         <span style="font-weight: 600; font-size: 1.25rem;">OdinBook</span>
