@@ -12,12 +12,12 @@
     </div>
     <% unless user == current_user %>
       <% if current_user.followings.include?(user) %>
-        <span class="btn btn-sm rounded-pill fw-bold text-white bg-dark hover-light">
-          <i class="fas fa-check me-1"></i>Following
+        <span class="badge rounded-pill bg-primary-subtle text-primary border border-primary-subtle px-3">
+          <i class="fas fa-user-check me-1"></i>Following
         </span>
       <% else %>
-        <span class="btn btn-sm rounded-pill fw-bold text-white bg-primary hover-dark">
-          <i class="fas fa-plus me-1"></i>Follow
+        <span class="badge rounded-pill bg-light text-secondary border px-3">
+          <i class="fas fa-user-plus me-1"></i>Not Following
         </span>
       <% end %>
     <% end %>
