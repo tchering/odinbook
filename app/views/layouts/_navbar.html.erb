@@ -1,90 +1,115 @@
 <style>
-/* Navbar styling */
-.navbar {
-  background-color: #f8f9fa;
-  padding: 1rem;
-}
-
-.navbar-brand {
-  font-weight: 600;
-}
-
-.nav-item {
-  margin-right: 15px;
-}
-
-.nav-link {
-  color: #333;
-  text-decoration: none;
-}
-
-.nav-link:hover {
-  color: #007bff;
-}
-
-/* Dropdown styling */
-.nav-item.dropdown:hover .dropdown-menu,
-.dropdown:hover .dropdown-menu {
-  display: block;
-  transition: 1s;
-}
-
-.dropdown-menu {
-  position: absolute;
-  background-color: white;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  display: none; /* Hide by default */
-  min-width: 160px;
-  border-radius: 0.25rem;
-  z-index: 1000;
-  right: -22px; /* Align to right edge of parent */
-  left: auto; /* Override default left alignment */
-}
-
-.nav-item .dropdown-menu {
-  left: 0;
-  right: auto;
-}
-
-.dropdown {
-  position: relative;
-}
-
-.dropdown:hover .dropdown-menu {
-  display: block;
-}
-
-/* Custom CSS for responsive navbar */
-@media (max-width: 767px) {
-  .navbar-collapse {
-    margin-top: 10px;
+  /* Navbar styling */
+  .navbar {
+    background-color: #f8f9fa;
+    padding: 1rem;
   }
-  /* Ensure the navbar toggler button works */
-  .navbar-toggler {
+
+  .navbar-brand {
+    font-weight: 600;
+  }
+
+  .nav-item {
+    margin-right: 15px;
+  }
+
+  .nav-link {
+    color: #333;
+    text-decoration: none;
+  }
+
+  .nav-link:hover {
+    color: #007bff;
+  }
+
+  /* Dropdown styling */
+  .nav-item.dropdown:hover .dropdown-menu,
+  .dropdown:hover .dropdown-menu {
     display: block;
-    border: none; /* Optional: remove border around hamburger */
+    transition: 1s;
   }
-  
-  /* Ensure the navbar collapses properly */
-  .navbar-collapse.collapsing {
-    display: none;
+
+  .dropdown-menu {
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    display: none; /* Hide by default */
+    min-width: 160px;
+    border-radius: 0.25rem;
+    z-index: 1000;
+    right: -22px; /* Align to right edge of parent */
+    left: auto; /* Override default left alignment */
   }
-  
-  .navbar-collapse.show {
+
+  .nav-item .dropdown-menu {
+    left: 0;
+    right: auto;
+  }
+
+  .dropdown {
+    position: relative;
+  }
+
+  .dropdown:hover .dropdown-menu {
     display: block;
   }
 
-  .navbar-nav {
-    margin-top: 10px;
+  /* For medium screens (tablets): */
+  @media (max-width: 1024px) and (min-width: 768px) {
+  .dropdown-menu {
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    display: none; /* Hide by default */
+    max-width: 100%; /* Full width of the parent */
+    border-radius: 0.25rem;
+    z-index: 1000;
+    left: 0; /* Align to left edge of parent */
+    right: 0; /* Ensure dropdown menu spans the entire width */
+  }
   }
 
-  /* Optional: Adjust navbar link padding for smaller screens */
-  .navbar-nav .nav-item {
-    padding-left: 0;
-    padding-right: 0;
-  }
-}
+  /* Custom CSS for responsive navbar */
+  @media (max-width: 767px) {
 
+     .dropdown-menu {
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    display: none; /* Hide by default */
+    max-width: 100%; /* Full width of the parent (navbar) */
+    border-radius: 0.25rem;
+    z-index: 1000;
+    left: -30px; /* Align to left edge of parent */
+    right: 0; /* Ensure dropdown menu spans the entire width */
+  }
+    .navbar-collapse {
+      margin-top: 10px;
+    }
+    /* Ensure the navbar toggler button works */
+    .navbar-toggler {
+      display: block;
+    }
+
+    /* Remove unnecessary collapsing behavior */
+    .navbar-collapse {
+      display: none;
+    }
+
+    .navbar-collapse.show {
+      display: block;
+    }
+
+    .navbar-nav {
+      margin-top: 10px;
+    }
+
+    /* Optional: Adjust navbar link padding for smaller screens */
+    .navbar-nav .nav-item {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
 </style>
 <% if user_signed_in? %>
   <!-- Navbar for logged-in users -->
@@ -150,7 +175,7 @@
   </nav>
 <% else %>
   <!-- Navbar for non-logged-in users -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary" data-controller="navbar">
+  <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
     <div class="container">
       <!-- Logo -->
       <%= link_to root_path, class: "navbar-brand mt-2 mt-lg-0 d-flex align-items-center" do %>
