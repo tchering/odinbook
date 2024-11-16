@@ -36,16 +36,19 @@
     min-width: 160px;
     border-radius: 0.25rem;
     z-index: 1000;
+    right: 0; /* Align to right edge of parent */
+    left: auto; /* Override default left alignment */
   }
 
-  .dropdown-item {
-    padding: 10px 15px;
-    text-decoration: none;
-    color: #333;
+  /* For left-aligned dropdowns (like in the main navigation) */
+  .nav-item .dropdown-menu {
+    left: 0;
+    right: auto;
   }
 
-  .dropdown-item:hover {
-    background-color: #f8f9fa;
+  /* Ensure the dropdown doesn't get cut off */
+  .dropdown {
+    position: relative;
   }
 
   /* Ensure notifications dropdown works the same */
@@ -108,16 +111,7 @@
       <!-- Right Elements -->
       <div class="d-flex align-items-center">
         <!-- Notification Bell Dropdown -->
-        <div class="dropdown">
-          <a class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuNotifications" role="button" aria-expanded="false">
-            <i class="fas fa-bell"></i>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuNotifications">
-            <%= link_to "Notification 1", "#", class: "dropdown-item" %>
-            <%= link_to "Notification 2", "#", class: "dropdown-item" %>
-            <%= link_to "Notification 3", "#", class: "dropdown-item" %>
-          </ul>
-        </div>
+        <%= render "shared/notification" %>
         <!-- User Avatar Dropdown -->
         <div class="dropdown">
           <a class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
