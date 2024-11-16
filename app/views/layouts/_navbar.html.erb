@@ -1,73 +1,90 @@
 <style>
-  /* Navbar styling */
-  .navbar {
-    background-color: #f8f9fa;
-    padding: 1rem;
-  }
+/* Navbar styling */
+.navbar {
+  background-color: #f8f9fa;
+  padding: 1rem;
+}
 
-  .navbar-brand {
-    font-weight: 600;
-  }
+.navbar-brand {
+  font-weight: 600;
+}
 
-  .nav-item {
-    margin-right: 15px;
-  }
+.nav-item {
+  margin-right: 15px;
+}
 
-  .nav-link {
-    color: #333;
-    text-decoration: none;
-  }
+.nav-link {
+  color: #333;
+  text-decoration: none;
+}
 
-  .nav-link:hover {
-    color: #007bff;
-  }
+.nav-link:hover {
+  color: #007bff;
+}
 
-  /* Dropdown styling */
-  .nav-item.dropdown:hover .dropdown-menu,
-  .dropdown:hover .dropdown-menu {
+/* Dropdown styling */
+.nav-item.dropdown:hover .dropdown-menu,
+.dropdown:hover .dropdown-menu {
+  display: block;
+  transition: 1s;
+}
+
+.dropdown-menu {
+  position: absolute;
+  background-color: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  display: none; /* Hide by default */
+  min-width: 160px;
+  border-radius: 0.25rem;
+  z-index: 1000;
+  right: -22px; /* Align to right edge of parent */
+  left: auto; /* Override default left alignment */
+}
+
+.nav-item .dropdown-menu {
+  left: 0;
+  right: auto;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* Custom CSS for responsive navbar */
+@media (max-width: 767px) {
+  .navbar-collapse {
+    margin-top: 10px;
+  }
+  /* Ensure the navbar toggler button works */
+  .navbar-toggler {
+    display: block;
+    border: none; /* Optional: remove border around hamburger */
+  }
+  
+  /* Ensure the navbar collapses properly */
+  .navbar-collapse.collapsing {
+    display: none;
+  }
+  
+  .navbar-collapse.show {
     display: block;
   }
 
-  .dropdown-menu {
-    position: absolute;
-    background-color: white;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    display: none; /* Hide by default */
-    min-width: 160px;
-    border-radius: 0.25rem;
-    z-index: 1000;
-    right: 0; /* Align to right edge of parent */
-    left: auto; /* Override default left alignment */
+  .navbar-nav {
+    margin-top: 10px;
   }
 
-  /* For left-aligned dropdowns (like in the main navigation) */
-  .nav-item .dropdown-menu {
-    left: 0;
-    right: auto;
+  /* Optional: Adjust navbar link padding for smaller screens */
+  .navbar-nav .nav-item {
+    padding-left: 0;
+    padding-right: 0;
   }
+}
 
-  /* Ensure the dropdown doesn't get cut off */
-  .dropdown {
-    position: relative;
-  }
-
-  /* Ensure notifications dropdown works the same */
-  .dropdown:hover .dropdown-menu {
-    display: block;
-  }
-
-  /* Responsiveness */
-  @media (max-width: 767px) {
-    .navbar-collapse {
-      margin-top: 10px;
-    }
-    .navbar-toggler {
-      display: block;
-    }
-    .navbar-nav {
-      margin-top: 10px;
-    }
-  }
 </style>
 <% if user_signed_in? %>
   <!-- Navbar for logged-in users -->
