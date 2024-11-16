@@ -1,13 +1,81 @@
+<style>
+  /* Navbar styling */
+  .navbar {
+    background-color: #f8f9fa;
+    padding: 1rem;
+  }
+
+  .navbar-brand {
+    font-weight: 600;
+  }
+
+  .nav-item {
+    margin-right: 15px;
+  }
+
+  .nav-link {
+    color: #333;
+    text-decoration: none;
+  }
+
+  .nav-link:hover {
+    color: #007bff;
+  }
+
+  /* Dropdown styling */
+  .nav-item.dropdown:hover .dropdown-menu,
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    display: none; /* Hide by default */
+    min-width: 160px;
+    border-radius: 0.25rem;
+    z-index: 1000;
+  }
+
+  .dropdown-item {
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #333;
+  }
+
+  .dropdown-item:hover {
+    background-color: #f8f9fa;
+  }
+
+  /* Ensure notifications dropdown works the same */
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
+
+  /* Responsiveness */
+  @media (max-width: 767px) {
+    .navbar-collapse {
+      margin-top: 10px;
+    }
+    .navbar-toggler {
+      display: block;
+    }
+    .navbar-nav {
+      margin-top: 10px;
+    }
+  }
+</style>
 <% if user_signed_in? %>
   <!-- Navbar for logged-in users -->
   <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary" data-controller="navbar">
     <div class="container-fluid">
       <!-- Toggle button -->
-      <button data-mdb-collapse-init class="navbar-toggler" type="button" data-mdb-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarButtonsExample"
+              aria-controls="navbarButtonsExample" aria-expanded="false" aria-label="Toggle navigation">
         <i class="fas fa-bars"></i>
       </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="collapse navbar-collapse" id="navbarButtonsExample">
         <!-- Logo -->
         <%= link_to root_path, class: "navbar-brand mt-2 mt-lg-0 d-flex align-items-center" do %>
           <i class="fas fa-book-open me-2" style="color: #1266F1;"></i>
@@ -22,11 +90,10 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Projects</a>
           </li>
-          <!-- Dropdown Menu -->
-          <% if current_user.role=="admin" %>
+          <!-- Dropdown Menu for Admin -->
+          <% if current_user.role == "admin" %>
             <li class="nav-item dropdown">
-              <a data-mdb-dropdown-init class="nav-link dropdown-toggle" href="#"
-               id="navbarDropdownMenuLink" role="button" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" aria-expanded="false">
                 Contents
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -35,37 +102,36 @@
                 <li><a class="dropdown-item" href="#">Something else here</a></li>
               </ul>
             </li>
-          <%end%>
+          <% end %>
         </ul>
       </div>
       <!-- Right Elements -->
       <div class="d-flex align-items-center">
-        <!-- Notification Bell -->
-        <%= render "shared/notification" %>
+        <!-- Notification Bell Dropdown -->
+        <div class="dropdown">
+          <a class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuNotifications" role="button" aria-expanded="false">
+            <i class="fas fa-bell"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuNotifications">
+            <%= link_to "Notification 1", "#", class: "dropdown-item" %>
+            <%= link_to "Notification 2", "#", class: "dropdown-item" %>
+            <%= link_to "Notification 3", "#", class: "dropdown-item" %>
+          </ul>
+        </div>
         <!-- User Avatar Dropdown -->
         <div class="dropdown">
-          <a data-mdb-dropdown-init class="dropdown-toggle d-flex align-items-center hidden-arrow"
-             href="#" id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
+          <a class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
             <% if current_user&.avatar.attached? %>
               <%= image_tag current_user.avatar.variant(resize_to_limit: [50, 50]),
-        height: "22",
-        alt: "#{current_user.name}'s avatar",
-        loading: "lazy",
-        class: "rounded-circle" %>
+                            height: "22", alt: "#{current_user.name}'s avatar", loading: "lazy", class: "rounded-circle" %>
             <% else %>
-              <%= image_tag "default_avatar.png",
-                          height: "40",
-                          alt: "Default Avatar",
-                          loading: "lazy",
-                          class: "rounded-circle" %>
+              <%= image_tag "default_avatar.png", height: "40", alt: "Default Avatar", loading: "lazy", class: "rounded-circle" %>
             <% end %>
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
             <%= link_to "My profile", user_path(current_user), class: "dropdown-item" %>
             <%= link_to "Settings", edit_user_registration_path, class: "dropdown-item" %>
-            <%= link_to "Logout", destroy_user_session_path, 
-                       data: { turbo_method: :delete }, 
-                       class: "dropdown-item" %>
+            <%= link_to "Logout", destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item" %>
           </ul>
         </div>
       </div>
@@ -81,26 +147,14 @@
         <span style="font-weight: 600; font-size: 1.25rem;">OdinBook</span>
       <% end %>
       <!-- Toggle button -->
-      <button data-mdb-collapse-init class="navbar-toggler" type="button"
-      data-mdb-target="#navbarButtonsExample"
-      aria-controls="navbarButtonsExample"
-      aria-expanded="false"
-              aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarButtonsExample"
+              aria-controls="navbarButtonsExample" aria-expanded="false" aria-label="Toggle navigation">
         <i class="fas fa-bars"></i>
       </button>
       <div class="collapse navbar-collapse" id="navbarButtonsExample">
         <div class="d-flex align-items-center">
-          <%= link_to "Login", new_user_session_path, 
-                     data: { mdb_ripple_init: true }, 
-                     class: "btn btn-link px-3 me-2" %>
-          <%= link_to "Sign up", new_user_registration_path, 
-                     class: "btn btn-primary me-3", 
-                     data: { mdb_ripple_init: true }, 
-                     role: "button" %>
-          <a data-mdb-ripple-init class="btn btn-dark px-3"
-             href="https://github.com/mdbootstrap/mdb-ui-kit" role="button">
-            <i class="fab fa-github"></i>
-          </a>
+          <%= link_to "Login", new_user_session_path, class: "btn btn-link px-3 me-2" %>
+          <%= link_to "Sign up", new_user_registration_path, class: "btn btn-primary me-3", role: "button" %>
         </div>
       </div>
     </div>
