@@ -88,7 +88,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:body, :image)
+    params.require(:post).permit(:body, :image, :wall_owner_id)
   end
 
   def set_post
@@ -97,6 +97,4 @@ class PostsController < ApplicationController
 
     redirect_to posts_path, alert: "Post not found."
   end
-
-
 end
