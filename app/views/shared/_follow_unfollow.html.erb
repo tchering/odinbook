@@ -3,14 +3,14 @@
     <% if current_user.followings.include?(user) %>
       <%= link_to unfollow_relationship_path(user),
                 data: { turbo_method: :post },
-                class: "btn btn-outline-dark btn-sm rounded-pill following-btn" do %>
-        Following
+                class: "btn btn-sm rounded-pill fw-bold text-white bg-dark hover-light" do %>
+        <i class="fas fa-check me-1"></i> Following
       <% end %>
     <% else %>
       <%= link_to follow_relationship_path(user),
                 data: { turbo_method: :post },
-                class: "btn btn-primary btn-sm rounded-pill" do %>
-        Follow
+                class: "btn btn-sm rounded-pill fw-bold text-white bg-primary hover-dark" do %>
+        <i class="fas fa-plus me-1"></i> Follow
       <% end %>
     <% end %>
   <% end %>

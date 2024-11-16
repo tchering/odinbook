@@ -1,45 +1,45 @@
 <div class="dropdown me-3">
-          <a  class="text-reset me-3 " href="#" id="navbarDropdownMenuLink"  aria-expanded="false">
-            <i class="fas fa-bell"></i>
-            <!-- Always render the badge, but toggle d-none class -->
-            <span class="badge rounded-pill badge-notification bg-primary <%= 'd-none' if @notifications.empty? %>" 
+  <a  class="text-reset me-3 " href="#" id="navbarDropdownMenuLink"  aria-expanded="false">
+    <i class="fas fa-bell"></i>
+    <!-- Always render the badge, but toggle d-none class -->
+    <span class="badge rounded-pill badge-notification bg-primary <%= 'd-none' if @notifications.empty? %>" 
                   id="bell_notification_count">
-              <%= @notifications.size %>
-            </span>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
-            <li>
-              <h6 class="dropdown-header">Notifications</h6>
-            </li>
-            <% if @notifications.any? %>
-              <% @notifications
+      <%= @notifications.size %>
+    </span>
+  </a>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+    <li>
+      <h6 class="dropdown-header">Notifications</h6>
+    </li>
+    <% if @notifications.any? %>
+      <% @notifications
            .group_by(&:sender_id)
            .map { |_, notifications| notifications.max_by(&:created_at) }
            .each do |notification| %>
-                <li>
-                  <%= link_to chat_message_path(notification.sender), class: "dropdown-item d-flex align-items-center gap-2" do %>
-                    <div class="avatar-container">
-                      <%= notification.sender.avatar.attached? ? 
+        <li>
+          <%= link_to chat_message_path(notification.sender), class: "dropdown-item d-flex align-items-center gap-2" do %>
+            <div class="avatar-container">
+              <%= notification.sender.avatar.attached? ? 
                   image_tag(notification.sender.avatar, class: "rounded-circle", size: "32") :
                   image_tag("default_avatar.png", class: "rounded-circle", size: "32") %>
-                    </div>
-                    <div class="notification-content">
-                      <strong><%= notification.sender.name %></strong>
-                      <% unread_count = current_user.received_notifications.unread.where(sender_id: notification.sender_id).count %>
-                      <p class="mb-0 small text-muted">
-                        <%= truncate(notification.message.body, length: 30) if notification.message %>
-                        <% if unread_count > 1 %>
-                          <span class="badge rounded-pill bg-secondary"><%= unread_count %> messages</span>
-                        <% end %>
-                      </p>
-                    </div>
-                  <% end %>
-                </li>
-                <li><hr class="dropdown-divider"></li>
-              <% end %>
-              <li><%= link_to "View all notifications", "#", class: "dropdown-item" %></li>
-            <% else %>
-              <li><span class="dropdown-item-text">No new notifications</span></li>
-            <% end %>
-          </ul>
-        </div>
+            </div>
+            <div class="notification-content">
+              <strong><%= notification.sender.name %></strong>
+              <% unread_count = current_user.received_notifications.unread.where(sender_id: notification.sender_id).count %>
+              <p class="mb-0 small text-muted">
+                <%= truncate(notification.message.body, length: 30) if notification.message %>
+                <% if unread_count > 1 %>
+                  <span class="badge rounded-pill bg-secondary"><%= unread_count %> messages</span>
+                <% end %>
+              </p>
+            </div>
+          <% end %>
+        </li>
+        <li><hr class="dropdown-divider"></li>
+      <% end %>
+      <li><%= link_to "View all notifications", "#", class: "dropdown-item" %></li>
+    <% else %>
+      <li><span class="dropdown-item-text">No new notifications</span></li>
+    <% end %>
+  </ul>
+</div>

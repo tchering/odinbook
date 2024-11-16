@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_13_224434) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_16_172518) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -91,7 +91,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_13_224434) do
     t.datetime "updated_at", null: false
     t.integer "comments_count", default: 0, null: false
     t.integer "likes_count", default: 0, null: false
+    t.bigint "wall_owner_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
+    t.index ["wall_owner_id"], name: "index_posts_on_wall_owner_id"
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -127,6 +129,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_13_224434) do
   add_foreign_key "notifications", "users", column: "recipient_id"
   add_foreign_key "notifications", "users", column: "sender_id"
   add_foreign_key "posts", "users"
+  add_foreign_key "posts", "users", column: "wall_owner_id"
   add_foreign_key "relationships", "users", column: "followed_id"
   add_foreign_key "relationships", "users", column: "follower_id"
 end

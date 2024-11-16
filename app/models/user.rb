@@ -11,6 +11,8 @@ class User < ApplicationRecord
   validates :email, presence: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
   has_many :posts, dependent: :destroy
+  has_many :wall_posts, class_name: "Post", foreign_key: "wall_owner_id", dependent: :destroy
+  
   has_many :comments, dependent: :destroy
 
   has_one_attached :avatar

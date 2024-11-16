@@ -2,6 +2,7 @@
 
 class Post < ApplicationRecord
   belongs_to :author, class_name: "User", foreign_key: "user_id"
+  belongs_to :wall_owner, class_name: "User", foreign_key: "wall_owner_id", optional: true
 
   validates :body, presence: true, length: { minimum: 5, maximum: 500 }
 
