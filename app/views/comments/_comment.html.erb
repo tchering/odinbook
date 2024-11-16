@@ -4,45 +4,46 @@
       <div class="comment-avatar me-3">
         <%# Add a placeholder or user avatar here %>
         <div class="rounded-circle bg-light d-flex align-items-center justify-content-center" style="width: 40px; height: 40px">
-          <%= link_to user_path(comment.author),data:{turbo_frame:"_top"} do %>
+          <%= link_to user_path(comment.post.author),data:{turbo_frame:"_top"} do %>
             <%= comment.author.avatar.attached? ?
-           image_tag(comment.author.display_avatar,class:"rounded-circle ",height:"25",width:"25") : 
+           image_tag(comment.author.display_avatar,class:"rounded-circle ",height:"25",width:"25",data:{turbo_frame:"_top"}) : 
            image_tag("default_avatar.png",height:"70",width:"70") %>
           <% end %>
         </div>
       </div>
       <div class="comment-wrapper flex-grow-1">
         <div class="comment-content p-2 mb-2">
-          <div class="d-flex justify-content-between align-items-start">
+          <div class="d-flex">
             <div>
               <%= link_to comment.author.name, user_path(comment.author), 
-          class: "fw-bold text-decoration-none text-primary mb-1 d-inline-block" %>
-              <p class="comment-text mb-0 text-dark"><%= comment.body %></p>
+                 class: "fw-bold text-decoration-none text-primary mb-1 me-2 " %>
             </div>
+            <p class="comment-text mb-0 text-dark"><%= comment.body %></p>
           </div>
         </div>
-        <div class="comment-metadata px-2 d-flex justify-content-between align-item-center">
+        <div class="comment-metadata px-3 py-2 d-flex justify-content-between align-items-center border-top">
           <div class="d-flex align-items-center gap-3">
-            <small class="text-muted">
-              <i class="bi bi-clock me-1"></i>
+            <span class="text-secondary small">
+              <i class="bi bi-clock-history me-1"></i>
               <%= time_ago_in_words(comment.created_at) %> ago
-            </small>
+            </span>
             <% if comment.author == current_user %>
-              <small class="action-links">
+              <div class="comment-actions">
                 <%= link_to post_comment_path(comment.post, comment),
-            class: 'text-danger text-decoration-none',
+                    class: 'text-danger text-decoration-none small',
+                    title: 'Delete comment',
             data: { 
               turbo_method: :delete,
               turbo_confirm: 'Are you sure you want to delete this comment?'
             } do %>
-                <span class="d-none d-md-inline">Delete</span>
-                <i class="fas fa-trash d-inline d-md-none"></i>
+                  <span class="d-none d-md-inline">Delete</span>
+                  <i class="fas fa-trash-alt d-inline d-md-none"></i>
                 <% end %>
-              </small>
+              </div>
             <% end %>
           </div>
-          <div class="like">
-            <%= render partial: "shared/like_button",locals:{likeable:comment} %>
+          <div class="comment-reactions">
+            <%= render partial: "shared/like_button", locals: { likeable: comment } %>
           </div>
         </div>
       </div>
