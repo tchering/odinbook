@@ -18,7 +18,7 @@ Devise.setup do |config|
   #
   #  # ==> OmniAuth
   # Add GitHub as an OmniAuth provider
-  # config.secret_key = Rails.application.credentials.secret_key_base
+  config.secret_key = Rails.application.credentials.secret_key_base
   if Rails.env.production?
     config.omniauth :github,
                     ENV["GITHUB_CLIENT_ID"],
