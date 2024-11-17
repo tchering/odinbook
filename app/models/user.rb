@@ -22,7 +22,8 @@ class User < ApplicationRecord
       user.name = auth.info.name || auth.info.nickname
       user.email = auth.info.email # Assuming the user model has an email
       user.password = Devise.friendly_token[0, 20]
-      user.avatar = auth.info.image # Assuming you have an avatar field or attachment
+      #this is the line that was causing too many errors
+      attach_avatar(user, auth.info.image) if auth.info.image.present? # Assuming you have an avatar field or attachment
       # Add any additional user fields here
     end
   end
@@ -90,5 +91,17 @@ class User < ApplicationRecord
 
   def set_default_role
     self.role = "user"
+  end
+
+  def self.attach_avatar(user, image_url)
+    begin
+      downloaded_image = URI.open(image_url)
+      user.avatar.attach(
+        io: downloaded_image,
+        filename: "avatar-#{user.uid}.jpg",
+      )
+    rescue => e
+      Rails.logger.error "Failed to attach avatar: #{e.message}"
+    end
   end
 end
