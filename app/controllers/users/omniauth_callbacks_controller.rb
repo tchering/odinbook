@@ -1,6 +1,6 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def github
-    Rails.logger.debug("OmniAuth GitHub callback parameters: #{request.env["omniauth.auth"]}")
+    Rails.logger.debug("Received state: #{params[:state]}")
 
     @user = User.from_omniauth(request.env["omniauth.auth"])
 
