@@ -35,7 +35,7 @@ Devise.setup do |config|
                   ENV["GITHUB_CLIENT_ID"],
                   ENV["GITHUB_CLIENT_SECRET"],
                   scope: "user:email",
-                  callback_url: ENV["GITHUB_CALLBACK_URL"]
+                  callback_url: "https://odin-final-9a1f523128de.herokuapp.com/users/auth/github/callback"
   # config.navigational_formats = ["*/*", :html, :turbo_stream]
   # config.sign_out_via = [:get, :delete]
   # ==> Controller configuration
