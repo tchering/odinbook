@@ -18,7 +18,7 @@ class User < ApplicationRecord
       user.provider = auth.provider
       user.uid = auth.uid
     end
-
+    #This was causing an error ActiveSupport::MessageVerifier::InvalidSignature (mismatched digest)
     # Handle GitHub avatar separately
     if auth.info.image.present?
       begin
