@@ -94,12 +94,22 @@ class User < ApplicationRecord
   end
 
   def self.attach_avatar(user, image_url)
+    # Check if the user already has an avatar
+    if user.avatar.attached?
+      Rails.logger.info "User already has an avatar, skipping attachment."
+      return
+    end
+
     begin
+      # Download the image from the URL
       downloaded_image = URI.open(image_url)
+
+      # Attach the image as the user's avatar
       user.avatar.attach(
         io: downloaded_image,
         filename: "avatar-#{user.uid}.jpg",
       )
+      Rails.logger.info "Avatar successfully attached for user #{user.uid}"
     rescue => e
       Rails.logger.error "Failed to attach avatar: #{e.message}"
     end
