@@ -14,7 +14,6 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = 'b377a62e03764abb8b6743cfd2964118cafb2b4a66c0ad58889b7dce9368b4ecf6ff0a8b7fae4bafacb51671989f683b7919cc7e20945bc302b2c4ee19d52bd6'
   #
   #  # ==> OmniAuth
   # Add GitHub as an OmniAuth provider
