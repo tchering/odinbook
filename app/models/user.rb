@@ -18,10 +18,23 @@ class User < ApplicationRecord
       user.provider = auth.provider
       user.uid = auth.uid
     end
-    #This was causing error ActiveSupport::MessageVerifier::InvalidSignature (mismatched digest)
-    # Handle avatar attachment separately
-    # # Attach GitHub avatar if present
-    attach_github_avatar(user, auth.info.image) if auth.info.image.present?
+
+    # Handle GitHub avatar separately
+    if auth.info.image.present?
+      begin
+        require 'open-uri'
+        downloaded_image = URI.open(auth.info.image)
+        user.avatar.attach(
+          io: downloaded_image,
+          filename: "github-#{user.uid}.jpg",
+          content_type: 'image/jpeg'
+        )
+        user.save!
+        Rails.logger.info "Successfully attached GitHub avatar for user #{user.uid}"
+      rescue => e
+        Rails.logger.error "Failed to attach GitHub avatar: #{e.message}"
+      end
+    end
 
     user
   end
@@ -88,27 +101,5 @@ class User < ApplicationRecord
 
   def set_default_role
     self.role = "user"
-  end
-
-  def self.attach_github_avatar(user, image_url)
-    return if image_url.blank?
-
-    begin
-      downloaded_image = URI.open(image_url)
-
-      # Remove existing avatar if present
-      user.avatar.purge if user.avatar.attached?
-
-      # Attach new avatar
-      user.avatar.attach(
-        io: downloaded_image,
-        filename: "github-avatar-#{user.uid}.jpg",
-        content_type: "image/jpeg",
-      )
-
-      Rails.logger.info "GitHub avatar attached for user #{user.uid}"
-    rescue => e
-      Rails.logger.error "Failed to attach GitHub avatar: #{e.message}"
-    end
   end
 end
