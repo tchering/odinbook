@@ -21,9 +21,9 @@ Devise.setup do |config|
   # config.secret_key = Rails.application.credentials.secret_key_base
   if Rails.env.production?
     config.omniauth :github,
-      Rails.application.credentials.production[:github][:client_id],
-      Rails.application.credentials.production[:github][:client_secret],
-      scope: "user:email"
+                    ENV["GITHUB_CLIENT_ID"],
+                    ENV["GITHUB_CLIENT_SECRET"],
+                    scope: "user:email"
   else
     config.omniauth :github,
       Rails.application.credentials.development[:github][:client_id],
