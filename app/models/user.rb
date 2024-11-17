@@ -7,25 +7,23 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [:github]
 
+  has_one_attached :avatar
+
   # Method to find or create a user from OmniAuth data
   def self.from_omniauth(auth)
-    # Find the user by provider and UID
-    user = where(provider: auth.provider, uid: auth.uid).first
-
-    # If user exists, return it
-    return user if user
-
-    # If user doesn't exist, create a new one
-    where(email: auth.info.email).first_or_create do |user|
+    user = where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0, 20]
+      user.name = auth.info.name || auth.info.nickname
       user.provider = auth.provider
       user.uid = auth.uid
-      user.name = auth.info.name || auth.info.nickname
-      user.email = auth.info.email # Assuming the user model has an email
-      user.password = Devise.friendly_token[0, 20]
-      #this is the line that was causing too many errors
-      attach_avatar(user, auth.info.image) if auth.info.image.present? # Assuming you have an avatar field or attachment
-      # Add any additional user fields here
     end
+    #This was causing error ActiveSupport::MessageVerifier::InvalidSignature (mismatched digest)
+    # Handle avatar attachment separately
+    # # Attach GitHub avatar if present
+    attach_github_avatar(user, auth.info.image) if auth.info.image.present?
+
+    user
   end
 
   validates :name, presence: true
@@ -36,14 +34,13 @@ class User < ApplicationRecord
 
   has_many :comments, dependent: :destroy
 
-  has_one_attached :avatar
   validates :avatar, content_type: {
                        in: ["image/png", "image/jpg", "image/jpeg", "image/gif"],
                        message: "must be a PNG, JPG, JPEG or GIF",
                      },
                      size: {
-                       less_than: 2.megabytes,
-                       message: "should be less than 2MB",
+                       less_than: 5.megabytes,
+                       message: "should be less than 5MB",
                      }
 
   has_many :likes, dependent: :destroy
@@ -93,25 +90,25 @@ class User < ApplicationRecord
     self.role = "user"
   end
 
-  def self.attach_avatar(user, image_url)
-    # Check if the user already has an avatar
-    if user.avatar.attached?
-      Rails.logger.info "User already has an avatar, skipping attachment."
-      return
-    end
+  def self.attach_github_avatar(user, image_url)
+    return if image_url.blank?
 
     begin
-      # Download the image from the URL
       downloaded_image = URI.open(image_url)
 
-      # Attach the image as the user's avatar
+      # Remove existing avatar if present
+      user.avatar.purge if user.avatar.attached?
+
+      # Attach new avatar
       user.avatar.attach(
         io: downloaded_image,
-        filename: "avatar-#{user.uid}.jpg",
+        filename: "github-avatar-#{user.uid}.jpg",
+        content_type: "image/jpeg",
       )
-      Rails.logger.info "Avatar successfully attached for user #{user.uid}"
+
+      Rails.logger.info "GitHub avatar attached for user #{user.uid}"
     rescue => e
-      Rails.logger.error "Failed to attach avatar: #{e.message}"
+      Rails.logger.error "Failed to attach GitHub avatar: #{e.message}"
     end
   end
 end
