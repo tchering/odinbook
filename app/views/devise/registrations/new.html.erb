@@ -69,8 +69,10 @@
               <%= f.submit "Sign up", class: "btn btn-primary" %>
             </div>
           <% end %>
-          <div class="mt-4 text-center">
-            <%= render "devise/shared/links" %>
+          <div class="d-grid gap-2 mt-2">
+            <%- resource_class.omniauth_providers.each do |provider| %>
+              <%= button_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), data: { turbo: false }, class: "btn btn-dark d-flex align-items-center justify-content-center gap-2 w-100" %>
+            <% end %>
           </div>
         </div>
       </div>

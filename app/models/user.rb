@@ -5,14 +5,34 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [:github]
+
+  # Method to find or create a user from OmniAuth data
+  def self.from_omniauth(auth)
+    # Find the user by provider and UID
+    user = where(provider: auth.provider, uid: auth.uid).first
+
+    # If user exists, return it
+    return user if user
+
+    # If user doesn't exist, create a new one
+    where(email: auth.info.email).first_or_create do |user|
+      user.provider = auth.provider
+      user.uid = auth.uid
+      user.name = auth.info.name || auth.info.nickname
+      user.email = auth.info.email # Assuming the user model has an email
+      user.password = Devise.friendly_token[0, 20]
+      user.avatar = auth.info.image # Assuming you have an avatar field or attachment
+      # Add any additional user fields here
+    end
+  end
 
   validates :name, presence: true
   validates :email, presence: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
   has_many :posts, dependent: :destroy
   has_many :wall_posts, class_name: "Post", foreign_key: "wall_owner_id", dependent: :destroy
-  
+
   has_many :comments, dependent: :destroy
 
   has_one_attached :avatar

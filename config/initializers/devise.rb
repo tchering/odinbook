@@ -15,7 +15,14 @@ Devise.setup do |config|
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
   # config.secret_key = 'b377a62e03764abb8b6743cfd2964118cafb2b4a66c0ad58889b7dce9368b4ecf6ff0a8b7fae4bafacb51671989f683b7919cc7e20945bc302b2c4ee19d52bd6'
+  #
+  #  # ==> OmniAuth
+  # Add GitHub as an OmniAuth provider
+  # config.secret_key = Rails.application.credentials.secret_key_base
+  config.omniauth :github, Rails.application.credentials.github[:client_id], Rails.application.credentials.github[:client_secret], scope: "user:email" #scope: 'user,public_repo'
 
+  # config.navigational_formats = ["*/*", :html, :turbo_stream]
+  # config.sign_out_via = [:get, :delete]
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
   # config.parent_controller = 'DeviseController'
@@ -24,7 +31,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+  config.mailer_sender = "please-change-me-at-config-initializers-devise@example.com"
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -36,7 +43,7 @@ Devise.setup do |config|
   # Load and configure the ORM. Supports :active_record (default) and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
-  require 'devise/orm/active_record'
+  require "devise/orm/active_record"
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
