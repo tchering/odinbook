@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'active_support/core_ext/integer/time'
+require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -70,7 +70,7 @@ Rails.application.configure do
   # "info" includes generic and useful information about system operation, but avoids logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII). If you
   # want to log everything, set the level to "debug".
-  config.log_level = ENV.fetch('RAILS_LOG_LEVEL', 'info')
+  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -103,12 +103,15 @@ Rails.application.configure do
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
   #
+  #   # Set host for OmniAuth
+  # OmniAuth.config.full_host = "https://your-production-domain.com"
   # for action mailer in production
-  config.action_mailer.default_url_options = { host: 'https://odin-final-9a1f523128de.herokuapp.com' }
+
+  config.action_mailer.default_url_options = { host: "https://odin-final-9a1f523128de.herokuapp.com" }
 
   config.action_dispatch.default_headers.merge!(
-    'Access-Control-Allow-Origin' => '*',
-    'Access-Control-Allow-Methods' => 'GET',
-    'Permissions-Policy' => 'interest-cohort=(), compute-pressure=()'
+    "Access-Control-Allow-Origin" => "*",
+    "Access-Control-Allow-Methods" => "GET",
+    "Permissions-Policy" => "interest-cohort=(), compute-pressure=()",
   )
 end

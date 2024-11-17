@@ -6,6 +6,9 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :load_notifications, if: :user_signed_in?  # Only load if user is signed in
 
+  # def after_sign_in_path_for(resource)
+  #   dashboard_path # Replace with the desired path
+  # end
   protected
 
   def configure_permitted_parameters

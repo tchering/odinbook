@@ -5,24 +5,55 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [:github]
+
+  has_one_attached :avatar
+
+  # Method to find or create a user from OmniAuth data
+  def self.from_omniauth(auth)
+    user = where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0, 20]
+      user.name = auth.info.name || auth.info.nickname
+      user.provider = auth.provider
+      user.uid = auth.uid
+    end
+    #This was causing an error ActiveSupport::MessageVerifier::InvalidSignature (mismatched digest)
+    # Handle GitHub avatar separately
+    if auth.info.image.present?
+      begin
+        require 'open-uri'
+        downloaded_image = URI.open(auth.info.image)
+        user.avatar.attach(
+          io: downloaded_image,
+          filename: "github-#{user.uid}.jpg",
+          content_type: 'image/jpeg'
+        )
+        user.save!
+        Rails.logger.info "Successfully attached GitHub avatar for user #{user.uid}"
+      rescue => e
+        Rails.logger.error "Failed to attach GitHub avatar: #{e.message}"
+      end
+    end
+
+    user
+  end
 
   validates :name, presence: true
   validates :email, presence: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
   has_many :posts, dependent: :destroy
   has_many :wall_posts, class_name: "Post", foreign_key: "wall_owner_id", dependent: :destroy
-  
+
   has_many :comments, dependent: :destroy
 
-  has_one_attached :avatar
   validates :avatar, content_type: {
                        in: ["image/png", "image/jpg", "image/jpeg", "image/gif"],
                        message: "must be a PNG, JPG, JPEG or GIF",
                      },
                      size: {
-                       less_than: 2.megabytes,
-                       message: "should be less than 2MB",
+                       less_than: 5.megabytes,
+                       message: "should be less than 5MB",
                      }
 
   has_many :likes, dependent: :destroy
