@@ -30,12 +30,7 @@ Devise.setup do |config|
       Rails.application.credentials.github[:client_secret],
       scope: "user:email"
   end
-  #
-  # config.omniauth :github,
-  #                 ENV["GITHUB_CLIENT_ID"],
-  #                 ENV["GITHUB_CLIENT_SECRET"],
-  #                 scope: "user:email",
-  #                 callback_url: "https://odin-final-9a1f523128de.herokuapp.com/users/auth/github/callback"
+
   # config.navigational_formats = ["*/*", :html, :turbo_stream]
   # config.sign_out_via = [:get, :delete]
   # ==> Controller configuration
