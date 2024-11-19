@@ -69,8 +69,26 @@
               <%= f.submit "Sign up", class: "btn btn-primary" %>
             </div>
           <% end %>
-          <div class="mt-4 text-center">
-            <%= render "devise/shared/links" %>
+          <div class="text-center">
+            <%= link_to "Sign in",new_user_session_path %>
+          </div>
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <div>
+              <%= button_to user_github_omniauth_authorize_path, 
+              data: { turbo: false }, 
+              class: "btn btn-dark d-flex align-items-center justify-content-center gap-2 w-100" do %>
+                <i class="fab fa-github-square fa-xl"></i>
+                <span>Sign in with GitHub</span>
+              <% end %>
+            </div>
+            <div>
+              <%= button_to user_google_oauth2_omniauth_authorize_path,
+                data: { turbo: false },
+                class: "btn btn-light d-flex align-items-center justify-content-center gap-2 w-100 border" do %>
+                <i class="fab fa-google fa-xl"></i>
+                <span>Sign in with Google</span>
+              <% end %>
+            </div>
           </div>
         </div>
       </div>
