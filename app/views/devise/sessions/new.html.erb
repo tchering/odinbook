@@ -42,8 +42,23 @@
               <%= f.submit "Log in", class: "btn btn-primary" %>
             </div>
           <% end %>
-          <div class="mt-4 text-center">
-            <%= render "devise/shared/links" %>
+            <div class="mt-4">
+            <%= button_to user_github_omniauth_authorize_path, 
+              data: { turbo: false }, 
+              class: "btn btn-dark d-flex align-items-center justify-content-center gap-2 w-100" do %>
+              <i class="fab fa-github-square fa-xl"></i>
+              <span>Sign in with GitHub</span>
+            <% end %>
+            
+            <div class="d-flex justify-content-between mt-3">
+              <%= link_to "Sign up", 
+                new_user_registration_path, 
+                class: "text-decoration-none text-primary",
+                data: { turbo: false } %>
+              <%= link_to "Forgot your password?", 
+                new_user_password_path, 
+                class: "text-decoration-none text-primary" %>
+            </div>
           </div>
         </div>
       </div>
