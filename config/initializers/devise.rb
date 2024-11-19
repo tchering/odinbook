@@ -22,6 +22,12 @@ Devise.setup do |config|
                     ENV["GITHUB_CLIENT_ID"],
                     ENV["GITHUB_CLIENT_SECRET"],
                     scope: "user:email"
+
+    config.omniauth :google_oauth2,
+                    ENV["GOOGLE_CLIENT_ID"],
+                    ENV["GOOGLE_CLIENT_SECRET"],
+                    scope: "email",
+                    callback_url: "https://odin-final-9a1f523128de.herokuapp.com/users/auth/google_oauth2/callback"
   else
     config.omniauth :github,
       Rails.application.credentials.github[:client_id],
