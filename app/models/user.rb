@@ -5,7 +5,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [:github]
+         :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [:github, :google_oauth2]
 
   has_one_attached :avatar
 
@@ -22,12 +22,12 @@ class User < ApplicationRecord
     # Handle GitHub avatar separately
     if auth.info.image.present?
       begin
-        require 'open-uri'
+        require "open-uri"
         downloaded_image = URI.open(auth.info.image)
         user.avatar.attach(
           io: downloaded_image,
           filename: "github-#{user.uid}.jpg",
-          content_type: 'image/jpeg'
+          content_type: "image/jpeg",
         )
         user.save!
         Rails.logger.info "Successfully attached GitHub avatar for user #{user.uid}"

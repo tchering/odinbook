@@ -27,6 +27,12 @@ Devise.setup do |config|
       Rails.application.credentials.github[:client_id],
       Rails.application.credentials.github[:client_secret],
       scope: "user:email"
+
+    config.omniauth :google_oauth2,
+                    Rails.application.credentials.google[:client_id],
+                    Rails.application.credentials.google[:client_secret],
+                    scope: "email",
+                    callback_url: "http://localhost:3000/users/auth/google_oauth2/callback"
   end
 
   # config.navigational_formats = ["*/*", :html, :turbo_stream]
