@@ -1,10 +1,10 @@
 <%= link_to user_path(user), class: "text-decoration-none user-list-item" do %>
   <div class="d-flex align-items-center justify-content-between p-2 border-bottom hover-bg-light">
     <div class="d-flex align-items-center gap-3">
-      <%= image_tag(user.avatar.attached? ? user.avatar : "default_avatar.png", 
-                        class: "rounded-circle shadow-sm", 
-                        size: "40", 
-                                    alt: "#{user.name}'s avatar") %>
+      <%= image_tag(user.avatar.attached? ? user.avatar : "default_avatar.png",
+                    class: "rounded-circle shadow-sm",
+                    size: "40",
+                    alt: "#{user.name}'s avatar") %>
       <div class="d-flex flex-column">
         <span class="text-dark fw-semibold"><%= user.name %></span>
         <small class="text-muted">@<%= user.name %></small>
